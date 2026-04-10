@@ -49,12 +49,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ─── Sticky Header Shadow ───
+  const headerWrapper = document.querySelector('.header-wrapper');
   const header = document.querySelector('.header');
-  if (header) {
+  if (headerWrapper) {
     window.addEventListener('scroll', function () {
-      header.style.boxShadow = window.scrollY > 10
-        ? '0 5px 30px rgba(0,0,0,0.2)'
-        : '0 5px 30px rgba(0,0,0,0.1)';
+      headerWrapper.style.boxShadow = window.scrollY > 10
+        ? '0 8px 30px rgba(0,0,0,0.15)'
+        : 'none';
     });
   }
 
