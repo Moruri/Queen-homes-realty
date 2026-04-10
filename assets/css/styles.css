@@ -491,13 +491,21 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font); color: var(--dark); line-heig
   position: relative;
   z-index: 1;
   margin-top: 50px;
-  width: 25px;
-  height: 33px;
-  border: 3px solid var(--white);
+  width: 28px;
+  height: 42px;
+  border: 2px solid rgba(255,255,255,0.7);
   border-radius: 50px;
   display: flex;
   justify-content: center;
-  padding-top: 6px;
+  padding-top: 8px;
+  cursor: pointer;
+  transition: border-color var(--transition), transform var(--transition);
+  text-decoration: none;
+}
+
+.scroll-indicator:hover {
+  border-color: var(--white);
+  transform: translateY(3px);
 }
 
 .scroll-dot {
@@ -505,12 +513,12 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font); color: var(--dark); line-heig
   height: 4px;
   background: var(--white);
   border-radius: 50%;
-  animation: scrollBounce 1.5s ease-in-out infinite;
+  animation: scrollBounce 1.8s ease-in-out infinite;
 }
 
 @keyframes scrollBounce {
   0%, 100% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(8px); opacity: 0.3; }
+  50% { transform: translateY(10px); opacity: 0.2; }
 }
 
 /* ============================================
