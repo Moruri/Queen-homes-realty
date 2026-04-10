@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Properties — Queen Homes Realty | Apartments, Villas & More</title>
+  <meta name="description" content="Browse premium properties for sale and rent in Nairobi — apartments, villas, townhouses, penthouses. Find your ideal home with Queen Homes Realty.">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-left">
+        <a href="tel:+254707044244"><i class="fas fa-phone"></i> +254 707 044 244</a>
+        <a href="mailto:info@queenhomesrealty.com"><i class="fas fa-envelope"></i> info@queenhomesrealty.com</a>
+        <a href="#"><i class="fas fa-map-marker-alt"></i> Tuwork Park, Olenguruone Ave, Nairobi</a>
+      </div>
+      <div class="top-bar-right">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-text"><span>Queen</span> Homes Realty</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html">Home</a>
+        <span class="nav-divider"></span>
+        <a href="properties.html" class="active">Properties</a>
+        <span class="nav-divider"></span>
+        <a href="about.html">About Us</a>
+        <span class="nav-divider"></span>
+        <a href="services.html">Services</a>
+        <span class="nav-divider"></span>
+        <a href="contact.html">Contact Us</a>
+        <span class="nav-divider"></span>
+        <a href="contact.html" class="nav-cta">Book a Viewing <i class="fas fa-arrow-right"></i></a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <p class="subtitle">Browse Our Collection</p>
+    <h1>Properties</h1>
+    <div class="breadcrumb">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a> <i class="fas fa-chevron-right"></i> Properties
+    </div>
+  </section>
+
+  <!-- Properties Section -->
+  <section class="section">
+    <div class="container">
+      <div class="properties-layout">
+
+        <!-- Main Content -->
+        <div>
+          <div class="filter-bar">
+            <div class="filter-bar-left">
+              <span>Showing <strong id="results-count">9</strong> Properties</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <div class="filter-sort">
+                <select id="sort-select">
+                  <option value="newest">Newest First</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                </select>
+              </div>
+              <div class="view-toggle">
+                <button class="active" data-view="grid"><i class="fas fa-th"></i></button>
+                <button data-view="list"><i class="fas fa-list"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="property-grid" id="property-grid">
+            <div class="property-card fade-in" data-type="apartment" data-location="kilimani" data-status="sale" data-price="7000000">
+              <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop" alt="Amethyst Apartments" loading="lazy">
+                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
+                <button class="property-favorite"><i class="far fa-heart"></i></button>
+                <div class="property-price">KES 7,000,000</div>
+              </div>
+              <div class="property-info">
+                <h3><a href="property-detail.html">Amethyst — Luxury Apartments, Kilimani</a></h3>
+                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Kilimani, Nairobi</div>
+                <div class="property-details">
+                  <div class="property-detail"><i class="fas fa-bed"></i> 3 Beds</div>
+                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
+                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,400 ft&sup2;</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="property-card fade-in" data-type="apartment" data-location="ruaka" data-status="sale" data-price="7300000">
+              <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop" alt="Capital Garden" loading="lazy">
+                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
+                <button class="property-favorite"><i class="far fa-heart"></i></button>
+                <div class="property-price">KES 7,300,000</div>
+              </div>
+              <div class="property-info">
+                <h3><a href="#">Capital Garden — Luxury Apartments</a></h3>
+                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Ruiru, Kiambu</div>
+                <div class="property-details">
+                  <div class="property-detail"><i class="fas fa-bed"></i> 3 Beds</div>
+                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
+                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,100 ft&sup2;</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="property-card fade-in" data-type="villa" data-location="karen" data-status="sale" data-price="35000000">
+              <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&h=400&fit=crop" alt="Karen Villa" loading="lazy">
+                <div class="property-badge"><span class="badge badge-sale">For Sale</span><span class="badge badge-featured">Featured</span></div>
+                <button class="property-favorite"><i class="far fa-heart"></i></button>
+                <div class="property-price">KES 35,000,000</div>
+              </div>
+              <div class="property-info">
+                <h3><a href="#">Exclusive Karen Villa with Pool</a></h3>
+                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Karen, Nairobi</div>
+                <div class="property-details">
+                  <div class="property-detail"><i class="fas fa-bed"></i> 5 Beds</div>
+                  <div class="property-detail"><i class="fas fa-bath"></i> 4 Baths</div>
+                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 4,500 ft&sup2;</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="property-card fade-in" data-type="apartment" data-location="westlands" data-status="sale" data-price="5000000">
+              <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop" alt="Westlands Apartment" loading="lazy">
+                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
+                <button class="property-favorite"><i class="far fa-heart"></i></button>
+                <div class="property-price">KES 5,000,000</div>
+              </div>
+              <div class="property-info">
+                <h3><a href="#">Modern 2BR Apartment, Westlands</a></h3>
+                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Westlands, Nairobi</div>
+                <div class="property-details">
+                  <div class="property-detail"><i class="fas fa-bed"></i> 2 Beds</div>
+                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
+                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 950 ft&sup2;</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="property-card fade-in" data-type="townhouse" data-location="ruaka" data-status="sale" data-price="8400000">
+              <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop" alt="Lesonia Townhouse" loading="lazy">
+                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
+                <button class="property-favorite"><i class="far fa-heart"></i></button>
+                <div class="property-price">KES 8,400,000</div>
+              </div>
+              <div class="property-info">
+                <h3><a href="#">Lesonia — Premium Townhouse</a></h3>
+                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Mlolongo, Machakos</div>
+                <div class="property-details">
+                  <div class="property-detail"><i class="fas fa-bed"></i> 4 Beds</div>
+                  <div class="property-detail"><i class="fas fa-bath"></i> 3 Baths</div>
+                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 2,800 ft&sup2;</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="property-card fade-in" data-type="apartment" data-location="kileleshwa" data-status="rent" data-price="85000">
+              <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=400&fit=crop" alt="Kileleshwa Apartment" loading="lazy">
+                <div class="property-badge"><span class="badge badge-rent">For Rent</span></div>
+                <button class="property-favorite"><i class="far fa-heart"></i></button>
+                <div class="property-price">KES 85,000 <small>/month</small></div>
+              </div>
+              <div class="property-info">
+                <h3><a href="#">Modern 2BR Apartment, Kileleshwa</a></h3>
+                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Kileleshwa, Nairobi</div>
+                <div class="property-details">
+                  <div class="property-detail"><i class="fas fa-bed"></i> 2 Beds</div>
+                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
+                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,100 ft&sup2;</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="property-card fade-in" data-type="penthouse" data-location="westlands" data-status="sale" data-price="22000000">
+              <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&h=400&fit=crop" alt="Skyline Penthouse" loading="lazy">
+                <div class="property-badge"><span class="badge badge-sale">For Sale</span><span class="badge badge-featured">Featured</span></div>
+                <button class="property-favorite"><i class="far fa-heart"></i></button>
+                <div class="property-price">KES 22,000,000</div>
+              </div>
+              <div class="property-info">
+                <h3><a href="#">Skyline Penthouse, Westlands</a></h3>
+                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Westlands, Nairobi</div>
+                <div class="property-details">
+                  <div class="property-detail"><i class="fas fa-bed"></i> 4 Beds</div>
+                  <div class="property-detail"><i class="fas fa-bath"></i> 3 Baths</div>
+                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 3,200 ft&sup2;</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="property-card fade-in" data-type="apartment" data-location="lavington" data-status="rent" data-price="120000">
+              <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop" alt="Lavington Apartment" loading="lazy">
+                <div class="property-badge"><span class="badge badge-rent">For Rent</span></div>
+                <button class="property-favorite"><i class="far fa-heart"></i></button>
+                <div class="property-price">KES 120,000 <small>/month</small></div>
+              </div>
+              <div class="property-info">
+                <h3><a href="#">Spacious 3BR, Lavington</a></h3>
+                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Lavington, Nairobi</div>
+                <div class="property-details">
+                  <div class="property-detail"><i class="fas fa-bed"></i> 3 Beds</div>
+                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
+                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,600 ft&sup2;</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="property-card fade-in" data-type="maisonette" data-location="ruaka" data-status="sale" data-price="18500000">
+              <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&h=400&fit=crop" alt="Ruaka Maisonette" loading="lazy">
+                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
+                <button class="property-favorite"><i class="far fa-heart"></i></button>
+                <div class="property-price">KES 18,500,000</div>
+              </div>
+              <div class="property-info">
+                <h3><a href="#">Elegant 4BR Maisonette, Ruaka</a></h3>
+                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Ruaka, Kiambu</div>
+                <div class="property-details">
+                  <div class="property-detail"><i class="fas fa-bed"></i> 4 Beds</div>
+                  <div class="property-detail"><i class="fas fa-bath"></i> 3 Baths</div>
+                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 2,400 ft&sup2;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pagination">
+            <span class="active">1</span>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside>
+          <div class="sidebar-widget">
+            <h4>Filter Properties</h4>
+            <div class="form-group">
+              <label>Property Type</label>
+              <select id="filter-type"><option value="">All Types</option><option value="apartment">Apartment</option><option value="villa">Villa</option><option value="townhouse">Townhouse</option><option value="penthouse">Penthouse</option><option value="maisonette">Maisonette</option></select>
+            </div>
+            <div class="form-group">
+              <label>Location</label>
+              <select id="filter-location"><option value="">All Locations</option><option value="kilimani">Kilimani</option><option value="karen">Karen</option><option value="lavington">Lavington</option><option value="westlands">Westlands</option><option value="ruaka">Ruaka</option><option value="kileleshwa">Kileleshwa</option></select>
+            </div>
+            <div class="form-group">
+              <label>Status</label>
+              <select id="filter-status"><option value="">All</option><option value="sale">For Sale</option><option value="rent">For Rent</option></select>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 8px;" id="apply-filters"><i class="fas fa-search"></i> Apply Filters</button>
+          </div>
+
+          <div class="sidebar-widget">
+            <h4>Mortgage Calculator</h4>
+            <div class="form-group"><label>Property Price (KES)</label><input type="number" id="mort-price" value="10000000"></div>
+            <div class="form-group"><label>Down Payment (KES)</label><input type="number" id="mort-down" value="2000000"></div>
+            <div class="form-group"><label>Interest Rate (%)</label><input type="number" id="mort-rate" value="12" step="0.1"></div>
+            <div class="form-group"><label>Loan Term (Years)</label><input type="number" id="mort-years" value="20"></div>
+            <button class="btn btn-dark" style="width: 100%; margin-top: 8px;" id="calc-mortgage">Calculate</button>
+            <div id="mort-result" style="margin-top: 16px; display: none;">
+              <strong>Monthly Payment:</strong> <span id="mort-payment" style="color: var(--gold); font-size: 18px; font-weight: 600;"></span>
+            </div>
+          </div>
+
+          <div class="sidebar-widget">
+            <h4>Our Listings</h4>
+            <ul style="display: flex; flex-direction: column; gap: 8px;">
+              <li style="font-size: 14px;"><a href="#" style="display: flex; justify-content: space-between;"><span>Residential</span><span style="color: var(--gold);">(24)</span></a></li>
+              <li style="font-size: 14px;"><a href="#" style="display: flex; justify-content: space-between;"><span>Commercial</span><span style="color: var(--gold);">(8)</span></a></li>
+              <li style="font-size: 14px;"><a href="#" style="display: flex; justify-content: space-between;"><span>Off-Plan</span><span style="color: var(--gold);">(12)</span></a></li>
+              <li style="font-size: 14px;"><a href="#" style="display: flex; justify-content: space-between;"><span>Land</span><span style="color: var(--gold);">(5)</span></a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="logo-text"><span>Queen</span> Homes Realty</span>
+            <p>Your trusted partner in finding premium properties across Kenya.</p>
+            <div class="footer-social">
+              <a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="footer-column"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="properties.html">Properties</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+          <div class="footer-column"><h4>Property Types</h4><ul><li><a href="#">Apartments</a></li><li><a href="#">Villas</a></li><li><a href="#">Townhouses</a></li><li><a href="#">Penthouses</a></li></ul></div>
+          <div class="footer-column"><h4>Contact Us</h4><ul><li><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:8px;"></i> Tuwork Park, Nairobi</li><li><a href="tel:+254707044244"><i class="fas fa-phone" style="color:var(--gold);margin-right:8px;"></i> +254 707 044 244</a></li><li><a href="mailto:info@queenhomesrealty.com"><i class="fas fa-envelope" style="color:var(--gold);margin-right:8px;"></i> info@queenhomesrealty.com</a></li></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p>&copy; 2025 Queen Homes Realty. All rights reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div></div>
+  </footer>
+
+  <div class="whatsapp-widget"><a href="https://wa.me/254707044244" target="_blank" rel="noopener noreferrer" class="whatsapp-btn"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>Reach us on WhatsApp</span></a></div>
+  <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
