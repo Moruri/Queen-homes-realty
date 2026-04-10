@@ -3,70 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amethyst — Luxury Apartments for Sale | Queen Homes Realty</title>
-  <meta name="description" content="Amethyst Luxury Apartments — 3 bedroom apartment for sale in Kilimani, Nairobi. KES 7,000,000. Book a viewing with Queen Homes Realty.">
+  <title>Property Details | Queen Homes Realty</title>
+  <meta name="description" content="View property details — Queen Homes Realty, premium properties in Nairobi, Kenya.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    .detail-gallery { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; border-radius: 12px; overflow: hidden; margin-bottom: 40px; }
-    .detail-gallery-main { height: 450px; }
-    .detail-gallery-main img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: transform 0.3s; }
-    .detail-gallery-main img:hover { transform: scale(1.02); }
-    .detail-gallery-side { display: flex; flex-direction: column; gap: 8px; }
-    .detail-gallery-side img { flex: 1; width: 100%; object-fit: cover; cursor: pointer; border-radius: 0; transition: opacity 0.3s; }
-    .detail-gallery-side img:hover { opacity: 0.85; }
-
-    .detail-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
-    .detail-header { margin-bottom: 24px; }
-    .detail-header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
-    .detail-header .detail-location { font-size: 15px; color: var(--text); display: flex; align-items: center; gap: 6px; }
-    .detail-header .detail-location i { color: var(--gold); }
-    .detail-price-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
-    .detail-price { font-size: 28px; font-weight: 700; color: var(--gold); }
-    .detail-status { padding: 6px 18px; border-radius: 6px; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-    .detail-status.sale { background: var(--gold); color: white; }
-    .detail-status.rent { background: var(--green); color: white; }
-
-    .detail-features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
-    .detail-feature { background: var(--light-bg); padding: 16px; border-radius: 10px; text-align: center; }
-    .detail-feature i { font-size: 22px; color: var(--gold); margin-bottom: 8px; display: block; }
-    .detail-feature strong { display: block; font-size: 16px; color: var(--dark); }
-    .detail-feature span { font-size: 12px; color: var(--text); }
-
-    .detail-section { margin-bottom: 32px; }
-    .detail-section h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-    .detail-section p { font-size: 15px; color: var(--text); line-height: 1.8; }
-
-    .detail-amenities { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .detail-amenity { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--dark); padding: 8px 0; }
-    .detail-amenity i { color: var(--gold); font-size: 16px; width: 20px; text-align: center; }
-
-    .detail-sidebar-card { background: var(--white); border-radius: 12px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 24px; }
-    .detail-sidebar-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
-
-    .agent-info { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
-    .agent-info img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
-    .agent-info h5 { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
-    .agent-info span { font-size: 13px; color: var(--text); }
-
-    .agent-actions { display: flex; flex-direction: column; gap: 10px; }
-    .agent-actions .btn { width: 100%; justify-content: center; }
-
-    @media (max-width: 1024px) {
-      .detail-layout { grid-template-columns: 1fr; }
-      .detail-features { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 768px) {
-      .detail-gallery { grid-template-columns: 1fr; }
-      .detail-gallery-main { height: 280px; }
-      .detail-gallery-side { flex-direction: row; height: 100px; }
-      .detail-gallery-side img { height: 100px; }
-      .detail-features { grid-template-columns: 1fr 1fr; }
-      .detail-amenities { grid-template-columns: 1fr; }
-      .detail-header h1 { font-size: 22px; }
-      .detail-price { font-size: 22px; }
-    }
+    .detail-gallery{display:grid;grid-template-columns:2fr 1fr;gap:8px;border-radius:12px;overflow:hidden;margin-bottom:40px}
+    .detail-gallery-main{height:450px}
+    .detail-gallery-main img{width:100%;height:100%;object-fit:cover;cursor:pointer;transition:transform .3s}
+    .detail-gallery-main img:hover{transform:scale(1.02)}
+    .detail-gallery-side{display:flex;flex-direction:column;gap:8px}
+    .detail-gallery-side img{flex:1;width:100%;object-fit:cover;cursor:pointer;transition:opacity .3s}
+    .detail-gallery-side img:hover{opacity:.85}
+    .detail-layout{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
+    .detail-header{margin-bottom:24px}
+    .detail-header h1{font-size:28px;font-weight:600;margin-bottom:8px}
+    .detail-header .detail-location{font-size:15px;color:var(--text);display:flex;align-items:center;gap:6px}
+    .detail-header .detail-location i{color:var(--gold)}
+    .detail-price-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+    .detail-price{font-size:28px;font-weight:700;color:var(--gold)}
+    .detail-status{padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+    .detail-status.sale{background:var(--gold);color:#fff}
+    .detail-status.rent{background:var(--green);color:#fff}
+    .detail-features{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+    .detail-feature{background:var(--light-bg);padding:16px;border-radius:10px;text-align:center}
+    .detail-feature i{font-size:22px;color:var(--gold);margin-bottom:8px;display:block}
+    .detail-feature strong{display:block;font-size:16px;color:var(--dark)}
+    .detail-feature span{font-size:12px;color:var(--text)}
+    .detail-section{margin-bottom:32px}
+    .detail-section h3{font-size:20px;font-weight:600;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+    .detail-section p{font-size:15px;color:var(--text);line-height:1.8}
+    .detail-amenities{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .detail-amenity{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--dark);padding:8px 0}
+    .detail-amenity i{color:var(--gold);font-size:16px;width:20px;text-align:center}
+    .detail-sidebar-card{background:var(--white);border-radius:12px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:24px}
+    .detail-sidebar-card h4{font-size:18px;font-weight:600;margin-bottom:16px}
+    .agent-info{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+    .agent-info img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+    .agent-info h5{font-size:16px;font-weight:600;margin-bottom:2px}
+    .agent-info span{font-size:13px;color:var(--text)}
+    .agent-actions{display:flex;flex-direction:column;gap:10px}
+    .agent-actions .btn{width:100%;justify-content:center}
+    .mort-row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px}
+    .mort-row span{color:var(--text)}
+    @media(max-width:1024px){.detail-layout{grid-template-columns:1fr}.detail-features{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:768px){.detail-gallery{grid-template-columns:1fr}.detail-gallery-main{height:280px}.detail-gallery-side{flex-direction:row;height:100px}.detail-gallery-side img{height:100px}.detail-features{grid-template-columns:1fr 1fr}.detail-amenities{grid-template-columns:1fr}.detail-header h1{font-size:22px}.detail-price{font-size:22px}}
   </style>
 </head>
 <body>
@@ -91,25 +73,16 @@
   <!-- Header -->
   <header class="header">
     <div class="container">
-      <a href="index.html" class="logo">
-        <span class="logo-text"><span>Queen</span> Homes Realty</span>
-      </a>
+      <a href="index.html" class="logo"><span class="logo-text"><span>Queen</span> Homes Realty</span></a>
       <nav class="nav-menu">
-        <a href="index.html">Home</a>
-        <span class="nav-divider"></span>
-        <a href="properties.html" class="active">Properties</a>
-        <span class="nav-divider"></span>
-        <a href="about.html">About Us</a>
-        <span class="nav-divider"></span>
-        <a href="services.html">Services</a>
-        <span class="nav-divider"></span>
-        <a href="contact.html">Contact Us</a>
-        <span class="nav-divider"></span>
+        <a href="index.html">Home</a><span class="nav-divider"></span>
+        <a href="properties.html" class="active">Properties</a><span class="nav-divider"></span>
+        <a href="about.html">About Us</a><span class="nav-divider"></span>
+        <a href="services.html">Services</a><span class="nav-divider"></span>
+        <a href="contact.html">Contact Us</a><span class="nav-divider"></span>
         <a href="contact.html" class="nav-cta">Book a Viewing <i class="fas fa-arrow-right"></i></a>
       </nav>
-      <button class="menu-toggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
@@ -120,225 +93,22 @@
       <i class="fas fa-chevron-right"></i>
       <a href="properties.html">Properties</a>
       <i class="fas fa-chevron-right"></i>
-      Amethyst — Luxury Apartments
+      <span id="breadcrumb-title">Loading...</span>
     </div>
   </section>
 
-  <!-- Property Detail -->
+  <!-- Property Detail (populated by JS) -->
   <section class="section" style="padding-top: 20px;">
-    <div class="container">
-
-      <!-- Gallery -->
-      <div class="detail-gallery fade-in">
-        <div class="detail-gallery-main">
-          <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=800&fit=crop" alt="Amethyst Apartments Main" id="main-image">
-        </div>
-        <div class="detail-gallery-side">
-          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop" alt="Interior 1" onclick="document.getElementById('main-image').src=this.src.replace('w=600','w=1200').replace('h=400','h=800')">
-          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop" alt="Interior 2" onclick="document.getElementById('main-image').src=this.src.replace('w=600','w=1200').replace('h=400','h=800')">
-          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop" alt="Exterior" onclick="document.getElementById('main-image').src=this.src.replace('w=600','w=1200').replace('h=400','h=800')">
-        </div>
-      </div>
-
-      <!-- Content Layout -->
-      <div class="detail-layout">
-
-        <!-- Main Content -->
-        <div>
-          <div class="detail-header fade-in">
-            <h1>Amethyst — Luxury Apartments for Sale Near Kilimani</h1>
-            <div class="detail-location"><i class="fas fa-map-marker-alt"></i> Kilimani, Nairobi, Kenya</div>
-          </div>
-
-          <div class="detail-price-row fade-in">
-            <div class="detail-price">KES 7,000,000</div>
-            <span class="detail-status sale">For Sale</span>
-          </div>
-
-          <!-- Features -->
-          <div class="detail-features fade-in">
-            <div class="detail-feature">
-              <i class="fas fa-bed"></i>
-              <strong>3</strong>
-              <span>Bedrooms</span>
-            </div>
-            <div class="detail-feature">
-              <i class="fas fa-bath"></i>
-              <strong>2</strong>
-              <span>Bathrooms</span>
-            </div>
-            <div class="detail-feature">
-              <i class="fas fa-ruler-combined"></i>
-              <strong>1,400</strong>
-              <span>Sq Ft</span>
-            </div>
-            <div class="detail-feature">
-              <i class="fas fa-car"></i>
-              <strong>1</strong>
-              <span>Parking</span>
-            </div>
-          </div>
-
-          <!-- Description -->
-          <div class="detail-section fade-in">
-            <h3>Description</h3>
-            <p>Welcome to Amethyst, a luxury apartment development located in the heart of Kilimani, one of Nairobi's most sought-after neighborhoods. This stunning 3-bedroom apartment offers contemporary living with premium finishes throughout.</p>
-            <p style="margin-top: 12px;">The spacious open-plan living and dining area features large windows that flood the space with natural light. The modern kitchen comes fully fitted with quality cabinets, granite countertops, and ample storage. Each bedroom is generously sized with built-in wardrobes, and the master bedroom includes an en-suite bathroom.</p>
-            <p style="margin-top: 12px;">Residents enjoy access to a rooftop terrace, gym, children's play area, and 24/7 security. The location offers easy access to schools, shopping centers, hospitals, and major transport routes. This is an excellent opportunity for homeowners and investors alike.</p>
-          </div>
-
-          <!-- Amenities -->
-          <div class="detail-section fade-in">
-            <h3>Amenities & Features</h3>
-            <div class="detail-amenities">
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> 24/7 Security</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> Backup Generator</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> Rooftop Terrace</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> Gym / Fitness Center</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> Children's Play Area</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> Borehole Water</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> Covered Parking</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> Lift / Elevator</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> CCTV Surveillance</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> Modern Kitchen</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> En-suite Master</div>
-              <div class="detail-amenity"><i class="fas fa-check-circle"></i> Balcony</div>
-            </div>
-          </div>
-
-          <!-- Location Map -->
-          <div class="detail-section fade-in">
-            <h3>Location</h3>
-            <div style="border-radius: 12px; overflow: hidden;">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.18482422498!2d36.9547!3d-1.1489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f3fb5c4b1e6b1%3A0x5765189e04f71ca4!2sRuiru%2C%20Kenya!5e0!3m2!1sen!2ske!4v1700000000000" width="100%" height="350" style="border:0; display: block;" allowfullscreen="" loading="lazy" title="Property Location - Ruiru, Kenya"></iframe>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sidebar -->
-        <aside>
-          <!-- Agent Card -->
-          <div class="detail-sidebar-card fade-in">
-            <h4>Contact Agent</h4>
-            <div class="agent-info">
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face" alt="Regina Makendo" loading="lazy">
-              <div>
-                <h5>Regina Makendo</h5>
-                <span>Senior Property Consultant</span>
-              </div>
-            </div>
-            <div class="agent-actions">
-              <a href="tel:+254707044244" class="btn btn-primary"><i class="fas fa-phone"></i> Call Agent</a>
-              <a href="https://wa.me/254707044244?text=Hi%2C%20I'm%20interested%20in%20Amethyst%20Apartments%20(KES%207M)%20listed%20on%20Queen%20Homes%20Realty." target="_blank" class="btn btn-dark" style="background: #25D366;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-              <a href="mailto:info@queenhomesrealty.com?subject=Inquiry: Amethyst Apartments" class="btn btn-outline"><i class="fas fa-envelope"></i> Email Agent</a>
-            </div>
-          </div>
-
-          <!-- Inquiry Form -->
-          <div class="detail-sidebar-card fade-in">
-            <h4>Schedule a Viewing</h4>
-            <form>
-              <div class="form-group">
-                <input type="text" placeholder="Your Name" required>
-              </div>
-              <div class="form-group">
-                <input type="email" placeholder="Your Email" required>
-              </div>
-              <div class="form-group">
-                <input type="tel" placeholder="Phone Number">
-              </div>
-              <div class="form-group">
-                <textarea rows="3" placeholder="I'm interested in this property. Please schedule a viewing."></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary" style="width: 100%;">Send Inquiry <i class="fas fa-paper-plane"></i></button>
-            </form>
-          </div>
-
-          <!-- Mortgage Estimate -->
-          <div class="detail-sidebar-card fade-in">
-            <h4>Mortgage Estimate</h4>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
-              <span style="color: var(--text);">Property Price</span>
-              <strong>KES 7,000,000</strong>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
-              <span style="color: var(--text);">Down Payment (20%)</span>
-              <strong>KES 1,400,000</strong>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
-              <span style="color: var(--text);">Loan Amount</span>
-              <strong>KES 5,600,000</strong>
-            </div>
-            <hr style="border: none; border-top: 1px solid var(--border); margin: 12px 0;">
-            <div style="display: flex; justify-content: space-between; font-size: 15px;">
-              <span style="color: var(--text);">Est. Monthly Payment</span>
-              <strong style="color: var(--gold); font-size: 18px;">KES 61,615</strong>
-            </div>
-            <p style="font-size: 12px; color: var(--text); margin-top: 8px;">*Based on 12% interest over 20 years</p>
-          </div>
-        </aside>
-
-      </div>
+    <div class="container" id="property-detail-container">
+      <p style="text-align:center; padding: 60px 0; color: var(--text);">Loading property details...</p>
     </div>
   </section>
 
   <!-- Similar Properties -->
   <section class="section section-light">
     <div class="container">
-      <div class="section-header fade-in">
-        <p class="subtitle">You May Also Like</p>
-        <h2>Similar Properties</h2>
-      </div>
-      <div class="property-grid" style="grid-template-columns: repeat(3, 1fr);">
-        <div class="property-card fade-in">
-          <div class="property-image">
-            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop" alt="Capital Garden" loading="lazy">
-            <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-            <div class="property-price">KES 7,300,000</div>
-          </div>
-          <div class="property-info">
-            <h3><a href="property-detail.html">Capital Garden — Luxury Apartments</a></h3>
-            <div class="property-location"><i class="fas fa-map-marker-alt"></i> Ruiru, Kiambu</div>
-            <div class="property-details">
-              <div class="property-detail"><i class="fas fa-bed"></i> 3 Beds</div>
-              <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
-              <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,100 ft&sup2;</div>
-            </div>
-          </div>
-        </div>
-        <div class="property-card fade-in">
-          <div class="property-image">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop" alt="Westlands Apartment" loading="lazy">
-            <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-            <div class="property-price">KES 5,000,000</div>
-          </div>
-          <div class="property-info">
-            <h3><a href="property-detail.html">Modern 2BR Apartment, Westlands</a></h3>
-            <div class="property-location"><i class="fas fa-map-marker-alt"></i> Westlands, Nairobi</div>
-            <div class="property-details">
-              <div class="property-detail"><i class="fas fa-bed"></i> 2 Beds</div>
-              <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
-              <div class="property-detail"><i class="fas fa-ruler-combined"></i> 950 ft&sup2;</div>
-            </div>
-          </div>
-        </div>
-        <div class="property-card fade-in">
-          <div class="property-image">
-            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=400&fit=crop" alt="Kileleshwa Apartment" loading="lazy">
-            <div class="property-badge"><span class="badge badge-rent">For Rent</span></div>
-            <div class="property-price">KES 85,000 <small>/month</small></div>
-          </div>
-          <div class="property-info">
-            <h3><a href="property-detail.html">Modern 2BR, Kileleshwa</a></h3>
-            <div class="property-location"><i class="fas fa-map-marker-alt"></i> Kileleshwa, Nairobi</div>
-            <div class="property-details">
-              <div class="property-detail"><i class="fas fa-bed"></i> 2 Beds</div>
-              <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
-              <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,100 ft&sup2;</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="section-header"><p class="subtitle">You May Also Like</p><h2>Similar Properties</h2></div>
+      <div class="property-grid" id="similar-properties" style="grid-template-columns: repeat(3, 1fr);"></div>
     </div>
   </section>
 
@@ -350,12 +120,10 @@
           <div class="footer-brand">
             <span class="logo-text"><span>Queen</span> Homes Realty</span>
             <p>Your trusted partner in finding premium properties across Kenya.</p>
-            <div class="footer-social">
-              <a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
+            <div class="footer-social"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a></div>
           </div>
           <div class="footer-column"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="properties.html">Properties</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-          <div class="footer-column"><h4>Property Types</h4><ul><li><a href="#">Apartments</a></li><li><a href="#">Villas</a></li><li><a href="#">Townhouses</a></li><li><a href="#">Penthouses</a></li></ul></div>
+          <div class="footer-column"><h4>Property Types</h4><ul><li><a href="properties.html">Apartments</a></li><li><a href="properties.html">Villas</a></li><li><a href="properties.html">Townhouses</a></li><li><a href="properties.html">Penthouses</a></li></ul></div>
           <div class="footer-column"><h4>Contact Us</h4><ul><li><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:8px;"></i> Ruiru, Nairobi, Kenya</li><li><a href="tel:+254707044244"><i class="fas fa-phone" style="color:var(--gold);margin-right:8px;"></i> +254 707 044 244</a></li><li><a href="mailto:info@queenhomesrealty.com"><i class="fas fa-envelope" style="color:var(--gold);margin-right:8px;"></i> info@queenhomesrealty.com</a></li></ul></div>
         </div>
       </div>
@@ -365,6 +133,166 @@
 
   <div class="whatsapp-widget"><a href="https://wa.me/254707044244" target="_blank" rel="noopener noreferrer" class="whatsapp-btn"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>Reach us on WhatsApp</span></a></div>
   <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Load property data then render -->
+  <script src="assets/js/properties-data.js"></script>
+  <script>
+  (function() {
+    // Get property ID from URL: property-detail.html?id=amethyst-kilimani
+    var params = new URLSearchParams(window.location.search);
+    var propId = params.get('id');
+    var prop = propId ? getPropertyById(propId) : null;
+
+    if (!prop) {
+      document.getElementById('property-detail-container').innerHTML =
+        '<div style="text-align:center;padding:80px 0;"><h2>Property Not Found</h2><p style="color:var(--text);margin:16px 0 24px;">The property you are looking for does not exist or has been removed.</p><a href="properties.html" class="btn btn-primary">Browse All Properties <i class="fas fa-arrow-right"></i></a></div>';
+      document.getElementById('breadcrumb-title').textContent = 'Not Found';
+      return;
+    }
+
+    // Update page title and breadcrumb
+    document.title = prop.title + ' | Queen Homes Realty';
+    document.getElementById('breadcrumb-title').textContent = prop.title;
+
+    // Calculate mortgage estimate
+    var downPct = 0.2;
+    var downAmt = Math.round(prop.priceNum * downPct);
+    var loanAmt = prop.priceNum - downAmt;
+    var rate = 0.12 / 12;
+    var n = 20 * 12;
+    var monthly = prop.status === 'rent' ? 0 : Math.round(loanAmt * (rate * Math.pow(1 + rate, n)) / (Math.pow(1 + rate, n) - 1));
+    var priceLabel = prop.status === 'rent' ? prop.price + ' /month' : prop.price;
+    var statusClass = prop.status === 'rent' ? 'rent' : 'sale';
+    var statusText = prop.status === 'rent' ? 'For Rent' : 'For Sale';
+
+    // Build gallery HTML
+    var galleryHTML = '<div class="detail-gallery fade-in">' +
+      '<div class="detail-gallery-main"><img src="' + prop.image + '" alt="' + prop.title + '" id="main-image"></div>' +
+      '<div class="detail-gallery-side">';
+    for (var g = 0; g < prop.gallery.length; g++) {
+      galleryHTML += '<img src="' + prop.gallery[g] + '" alt="' + prop.title + ' ' + (g+1) + '" onclick="document.getElementById(\'main-image\').src=this.src.replace(\'w=600\',\'w=1200\').replace(\'h=400\',\'h=800\')">';
+    }
+    galleryHTML += '</div></div>';
+
+    // Build amenities HTML
+    var amenHTML = '';
+    for (var a = 0; a < prop.amenities.length; a++) {
+      amenHTML += '<div class="detail-amenity"><i class="fas fa-check-circle"></i> ' + prop.amenities[a] + '</div>';
+    }
+
+    // Build description paragraphs
+    var descParts = prop.description.split('\n\n');
+    var descHTML = '';
+    for (var d = 0; d < descParts.length; d++) {
+      descHTML += '<p' + (d > 0 ? ' style="margin-top:12px"' : '') + '>' + descParts[d] + '</p>';
+    }
+
+    // WhatsApp message
+    var waMsg = encodeURIComponent('Hi, I\'m interested in "' + prop.title + '" (' + prop.price + ') listed on Queen Homes Realty.');
+
+    // Build full detail HTML
+    var html = galleryHTML +
+      '<div class="detail-layout">' +
+        '<div>' +
+          '<div class="detail-header fade-in"><h1>' + prop.title + '</h1>' +
+          '<div class="detail-location"><i class="fas fa-map-marker-alt"></i> ' + prop.location + '</div></div>' +
+          '<div class="detail-price-row fade-in"><div class="detail-price">' + priceLabel + '</div>' +
+          '<span class="detail-status ' + statusClass + '">' + statusText + '</span></div>' +
+          '<div class="detail-features fade-in">' +
+            '<div class="detail-feature"><i class="fas fa-bed"></i><strong>' + prop.beds + '</strong><span>Bedrooms</span></div>' +
+            '<div class="detail-feature"><i class="fas fa-bath"></i><strong>' + prop.baths + '</strong><span>Bathrooms</span></div>' +
+            '<div class="detail-feature"><i class="fas fa-ruler-combined"></i><strong>' + prop.sqft + '</strong><span>Sq Ft</span></div>' +
+            '<div class="detail-feature"><i class="fas fa-car"></i><strong>' + prop.parking + '</strong><span>Parking</span></div>' +
+          '</div>' +
+          '<div class="detail-section fade-in"><h3>Description</h3>' + descHTML + '</div>' +
+          '<div class="detail-section fade-in"><h3>Amenities &amp; Features</h3><div class="detail-amenities">' + amenHTML + '</div></div>' +
+          '<div class="detail-section fade-in"><h3>Location</h3><div style="border-radius:12px;overflow:hidden;">' +
+            '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.18!2d36.9547!3d-1.1489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f3fb5c4b1e6b1%3A0x5765189e04f71ca4!2sRuiru%2C%20Kenya!5e0!3m2!1sen!2ske!4v1700000000000" width="100%" height="350" style="border:0;display:block;" allowfullscreen loading="lazy" title="Property Location"></iframe>' +
+          '</div></div>' +
+        '</div>' +
+        '<aside>' +
+          '<div class="detail-sidebar-card fade-in"><h4>Contact Agent</h4>' +
+            '<div class="agent-info"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face" alt="Regina Makendo" loading="lazy"><div><h5>Regina Makendo</h5><span>Senior Property Consultant</span></div></div>' +
+            '<div class="agent-actions">' +
+              '<a href="tel:+254707044244" class="btn btn-primary"><i class="fas fa-phone"></i> Call Agent</a>' +
+              '<a href="https://wa.me/254707044244?text=' + waMsg + '" target="_blank" class="btn btn-dark" style="background:#25D366;"><i class="fab fa-whatsapp"></i> WhatsApp</a>' +
+              '<a href="mailto:info@queenhomesrealty.com?subject=Inquiry: ' + encodeURIComponent(prop.title) + '" class="btn btn-outline"><i class="fas fa-envelope"></i> Email Agent</a>' +
+            '</div>' +
+          '</div>' +
+          '<div class="detail-sidebar-card fade-in"><h4>Schedule a Viewing</h4>' +
+            '<form><div class="form-group"><input type="text" placeholder="Your Name" required></div>' +
+            '<div class="form-group"><input type="email" placeholder="Your Email" required></div>' +
+            '<div class="form-group"><input type="tel" placeholder="Phone Number"></div>' +
+            '<div class="form-group"><textarea rows="3" placeholder="I\'m interested in this property. Please schedule a viewing."></textarea></div>' +
+            '<button type="submit" class="btn btn-primary" style="width:100%;">Send Inquiry <i class="fas fa-paper-plane"></i></button></form>' +
+          '</div>' +
+          (prop.status !== 'rent' ?
+          '<div class="detail-sidebar-card fade-in"><h4>Mortgage Estimate</h4>' +
+            '<div class="mort-row"><span>Property Price</span><strong>' + prop.price + '</strong></div>' +
+            '<div class="mort-row"><span>Down Payment (20%)</span><strong>KES ' + downAmt.toLocaleString() + '</strong></div>' +
+            '<div class="mort-row"><span>Loan Amount</span><strong>KES ' + loanAmt.toLocaleString() + '</strong></div>' +
+            '<hr style="border:none;border-top:1px solid var(--border);margin:12px 0;">' +
+            '<div class="mort-row"><span>Est. Monthly Payment</span><strong style="color:var(--gold);font-size:18px;">KES ' + monthly.toLocaleString() + '</strong></div>' +
+            '<p style="font-size:12px;color:var(--text);margin-top:8px;">*Based on 12% interest over 20 years</p>' +
+          '</div>' : '') +
+        '</aside>' +
+      '</div>';
+
+    document.getElementById('property-detail-container').innerHTML = html;
+
+    // Build similar properties (3 random ones, excluding current)
+    var others = PROPERTIES.filter(function(p) { return p.id !== prop.id; });
+    others.sort(function() { return 0.5 - Math.random(); });
+    var similar = others.slice(0, 3);
+    var simHTML = '';
+    for (var s = 0; s < similar.length; s++) {
+      var sp = similar[s];
+      var spBadge = sp.status === 'rent' ? 'badge-rent' : 'badge-sale';
+      var spLabel = sp.status === 'rent' ? 'For Rent' : 'For Sale';
+      var spPrice = sp.status === 'rent' ? sp.price + ' <small>/month</small>' : sp.price;
+      simHTML += '<div class="property-card fade-in" style="cursor:pointer;" onclick="window.location.href=\'property-detail.html?id=' + sp.id + '\'">' +
+        '<div class="property-image">' +
+          '<img src="' + sp.image.replace('w=1200','w=600').replace('h=800','h=400') + '" alt="' + sp.title + '" loading="lazy">' +
+          '<div class="property-badge"><span class="badge ' + spBadge + '">' + spLabel + '</span></div>' +
+          '<div class="property-price">' + spPrice + '</div>' +
+        '</div>' +
+        '<div class="property-info">' +
+          '<h3><a href="property-detail.html?id=' + sp.id + '">' + sp.title + '</a></h3>' +
+          '<div class="property-location"><i class="fas fa-map-marker-alt"></i> ' + sp.location + '</div>' +
+          '<div class="property-details">' +
+            '<div class="property-detail"><i class="fas fa-bed"></i> ' + sp.beds + ' Beds</div>' +
+            '<div class="property-detail"><i class="fas fa-bath"></i> ' + sp.baths + ' Baths</div>' +
+            '<div class="property-detail"><i class="fas fa-ruler-combined"></i> ' + sp.sqft + ' ft&sup2;</div>' +
+          '</div>' +
+        '</div></div>';
+    }
+    document.getElementById('similar-properties').innerHTML = simHTML;
+
+    // Trigger fade-in animations
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
+        }, { threshold: 0.1 });
+        obs.observe(el);
+      } else { el.classList.add('visible'); }
+    });
+
+    // Form submit handler
+    document.querySelectorAll('form').forEach(function(form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        var orig = btn ? btn.innerHTML : '';
+        if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...'; btn.disabled = true; }
+        setTimeout(function() {
+          if (btn) { btn.innerHTML = '<i class="fas fa-check"></i> Sent!'; btn.style.background = '#61CE70'; }
+          setTimeout(function() { form.reset(); if (btn) { btn.innerHTML = orig; btn.style.background = ''; btn.disabled = false; } }, 2500);
+        }, 1500);
+      });
+    });
+  })();
+  </script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
