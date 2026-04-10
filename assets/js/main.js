@@ -98,73 +98,140 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // ─── Property Filters (Properties Page) ───
-  const applyFilters = document.getElementById('apply-filters');
-  if (applyFilters) {
-    applyFilters.addEventListener('click', function () {
-      const type = document.getElementById('filter-type').value;
-      const location = document.getElementById('filter-location').value;
-      const status = document.getElementById('filter-status').value;
-      const cards = document.querySelectorAll('#property-grid .property-card');
-      let count = 0;
+  // ─── Make Entire Property Card Clickable ───
+  document.querySelectorAll('.property-card').forEach(function (card) {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function (e) {
+      // Don't navigate if clicking the favorite button
+      if (e.target.closest('.property-favorite')) return;
+      var link = card.querySelector('.property-info h3 a');
+      if (link && link.href) {
+        window.location.href = link.href;
+      }
+    });
+  });
 
-      cards.forEach(function (card) {
-        const cardType = card.getAttribute('data-type');
-        const cardLoc = card.getAttribute('data-location');
-        const cardStatus = card.getAttribute('data-status');
-        let show = true;
+  // ─── Properties Page: Pagination + Filters + Sort ───
+  var propGrid = document.getElementById('property-grid');
+  var paginationEl = document.getElementById('pagination');
 
-        if (type && cardType !== type) show = false;
-        if (location && cardLoc !== location) show = false;
-        if (status && cardStatus !== status) show = false;
+  if (propGrid && paginationEl) {
+    var PER_PAGE = 6;
+    var currentPage = 1;
+    var allCards = Array.from(propGrid.querySelectorAll('.property-card'));
+    var filteredCards = allCards.slice();
 
-        card.style.display = show ? '' : 'none';
-        if (show) count++;
+    function showPage(page) {
+      currentPage = page;
+      var start = (page - 1) * PER_PAGE;
+      var end = start + PER_PAGE;
+
+      allCards.forEach(function (c) { c.style.display = 'none'; });
+      filteredCards.slice(start, end).forEach(function (c) { c.style.display = ''; });
+
+      var resultsCount = document.getElementById('results-count');
+      if (resultsCount) resultsCount.textContent = filteredCards.length;
+
+      renderPagination();
+      // Scroll to top of grid
+      propGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderPagination() {
+      var totalPages = Math.ceil(filteredCards.length / PER_PAGE);
+      paginationEl.innerHTML = '';
+
+      if (totalPages <= 1) return;
+
+      // Previous button
+      if (currentPage > 1) {
+        var prev = document.createElement('a');
+        prev.href = '#';
+        prev.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        prev.addEventListener('click', function (e) { e.preventDefault(); showPage(currentPage - 1); });
+        paginationEl.appendChild(prev);
+      }
+
+      // Page numbers
+      for (var i = 1; i <= totalPages; i++) {
+        (function (pg) {
+          if (pg === currentPage) {
+            var span = document.createElement('span');
+            span.className = 'active';
+            span.textContent = pg;
+            paginationEl.appendChild(span);
+          } else {
+            var a = document.createElement('a');
+            a.href = '#';
+            a.textContent = pg;
+            a.addEventListener('click', function (e) { e.preventDefault(); showPage(pg); });
+            paginationEl.appendChild(a);
+          }
+        })(i);
+      }
+
+      // Next button
+      if (currentPage < totalPages) {
+        var next = document.createElement('a');
+        next.href = '#';
+        next.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        next.addEventListener('click', function (e) { e.preventDefault(); showPage(currentPage + 1); });
+        paginationEl.appendChild(next);
+      }
+    }
+
+    function applyAllFilters() {
+      var type = document.getElementById('filter-type').value;
+      var location = document.getElementById('filter-location').value;
+      var status = document.getElementById('filter-status').value;
+      var sortVal = document.getElementById('sort-select') ? document.getElementById('sort-select').value : 'newest';
+
+      // Filter
+      filteredCards = allCards.filter(function (card) {
+        if (type && card.getAttribute('data-type') !== type) return false;
+        if (location && card.getAttribute('data-location') !== location) return false;
+        if (status && card.getAttribute('data-status') !== status) return false;
+        return true;
       });
 
-      const resultsCount = document.getElementById('results-count');
-      if (resultsCount) resultsCount.textContent = count;
-    });
-  }
+      // Sort
+      if (sortVal === 'price-low') {
+        filteredCards.sort(function (a, b) { return (parseInt(a.getAttribute('data-price')) || 0) - (parseInt(b.getAttribute('data-price')) || 0); });
+      } else if (sortVal === 'price-high') {
+        filteredCards.sort(function (a, b) { return (parseInt(b.getAttribute('data-price')) || 0) - (parseInt(a.getAttribute('data-price')) || 0); });
+      }
 
-  // ─── Sort Properties ───
-  const sortSelect = document.getElementById('sort-select');
-  if (sortSelect) {
-    sortSelect.addEventListener('change', function () {
-      const grid = document.getElementById('property-grid');
-      if (!grid) return;
+      // Re-order in DOM
+      filteredCards.forEach(function (card) { propGrid.appendChild(card); });
 
-      const cards = Array.from(grid.querySelectorAll('.property-card'));
-      const sortVal = sortSelect.value;
+      showPage(1);
+    }
 
-      cards.sort(function (a, b) {
-        const priceA = parseInt(a.getAttribute('data-price')) || 0;
-        const priceB = parseInt(b.getAttribute('data-price')) || 0;
+    // Bind filter button
+    var applyBtn = document.getElementById('apply-filters');
+    if (applyBtn) {
+      applyBtn.addEventListener('click', applyAllFilters);
+    }
 
-        if (sortVal === 'price-low') return priceA - priceB;
-        if (sortVal === 'price-high') return priceB - priceA;
-        return 0; // newest — keep original order
-      });
+    // Bind sort
+    var sortSelect = document.getElementById('sort-select');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', applyAllFilters);
+    }
 
-      cards.forEach(function (card) { grid.appendChild(card); });
-    });
+    // Initial render
+    showPage(1);
   }
 
   // ─── View Toggle (Grid/List) ───
-  const viewBtns = document.querySelectorAll('.view-toggle button');
+  var viewBtns = document.querySelectorAll('.view-toggle button');
   viewBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
       viewBtns.forEach(function (b) { b.classList.remove('active'); });
       btn.classList.add('active');
-
-      const grid = document.getElementById('property-grid');
+      var grid = document.getElementById('property-grid');
       if (!grid) return;
-
-      if (btn.getAttribute('data-view') === 'list') {
-        grid.style.gridTemplateColumns = '1fr';
-      } else {
-        grid.style.gridTemplateColumns = '';
-      }
+      grid.style.gridTemplateColumns = btn.getAttribute('data-view') === 'list' ? '1fr' : '';
     });
   });
 
