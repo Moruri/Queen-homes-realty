@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Post | Queen Homes Realty</title>
+  <meta name="description" content="Read the latest real estate insights from Queen Homes Realty.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .blog-hero-img{width:100%;max-height:450px;object-fit:cover;border-radius:12px;margin-bottom:32px}
+    .blog-meta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:24px;font-size:14px;color:var(--text)}
+    .blog-meta i{color:var(--gold);margin-right:4px}
+    .blog-meta-tag{background:rgba(195,138,49,0.1);color:var(--gold);padding:4px 14px;border-radius:20px;font-size:12px;font-weight:500}
+    .blog-content{max-width:800px}
+    .blog-content p{font-size:16px;color:var(--text-dark);line-height:1.9;margin-bottom:20px}
+    .blog-content p:first-of-type::first-letter{font-size:48px;font-weight:600;color:var(--gold);float:left;line-height:1;margin-right:8px;margin-top:4px}
+    .blog-share{display:flex;align-items:center;gap:12px;padding:24px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:32px 0}
+    .blog-share span{font-size:14px;font-weight:600;color:var(--dark)}
+    .blog-share a{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--white);transition:opacity var(--transition)}
+    .blog-share a:hover{opacity:0.8;color:var(--white)}
+    .blog-nav{display:flex;justify-content:space-between;margin:32px 0;gap:20px;flex-wrap:wrap}
+    .blog-nav a{font-size:14px;color:var(--gold);display:flex;align-items:center;gap:6px}
+    .blog-nav a:hover{color:var(--dark)}
+    .blog-layout{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start}
+    .blog-sidebar-card{background:var(--white);border-radius:12px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:24px}
+    .blog-sidebar-card h4{font-size:18px;font-weight:600;color:var(--gold);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+    .blog-sidebar-item{display:flex;gap:12px;margin-bottom:14px;cursor:pointer}
+    .blog-sidebar-item img{width:70px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0}
+    .blog-sidebar-item h5{font-size:13px;font-weight:500;color:var(--dark);line-height:1.4;margin-bottom:2px}
+    .blog-sidebar-item span{font-size:11px;color:var(--text)}
+    .blog-sidebar-item:hover h5{color:var(--gold)}
+    @media(max-width:1024px){.blog-layout{grid-template-columns:1fr}}
+    @media(max-width:768px){.blog-content p:first-of-type::first-letter{font-size:36px}}
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-left">
+        <a href="tel:+254707044244"><i class="fas fa-phone"></i> +254 707 044 244</a>
+        <a href="mailto:info@queenhomesrealty.com"><i class="fas fa-envelope"></i> info@queenhomesrealty.com</a>
+        <a href="#"><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</a>
+      </div>
+      <div class="top-bar-right">
+        <a href="https://www.facebook.com/share/1Lad39tPjH/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/queenhomes?igsh=MTd4MWs2Y2c4YTN4Zw==" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@queen.homes0?_r=1&_t=ZS-95QpxwUY257" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-wrapper">
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo"><span class="logo-text"><span>Queen</span> Homes Realty</span></a>
+      <nav class="nav-menu">
+        <a href="index.html">Home</a><span class="nav-divider"></span>
+        <a href="properties.html">Properties</a><span class="nav-divider"></span>
+        <a href="about.html">About Us</a><span class="nav-divider"></span>
+        <a href="services.html">Services</a><span class="nav-divider"></span>
+        <a href="insights.html" class="active">Insights</a><span class="nav-divider"></span>
+        <a href="contact.html">Contact Us</a><span class="nav-divider"></span>
+        <a href="contact.html" class="nav-cta">Book a Viewing <i class="fas fa-arrow-right"></i></a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  </div>
+
+  <!-- Breadcrumb -->
+  <section class="page-header" style="padding: 40px 0 30px;">
+    <div class="breadcrumb">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <i class="fas fa-chevron-right"></i>
+      <a href="insights.html">Insights</a>
+      <i class="fas fa-chevron-right"></i>
+      <span id="breadcrumb-title">Loading...</span>
+    </div>
+  </section>
+
+  <!-- Blog Post Content -->
+  <section class="section" style="padding-top: 20px;">
+    <div class="container">
+      <div class="blog-layout">
+        <div id="blog-post-container">
+          <p style="text-align:center; padding: 60px 0; color: var(--text);">Loading article...</p>
+        </div>
+        <!-- Sidebar -->
+        <aside>
+          <div class="blog-sidebar-card">
+            <h4>Recent Posts</h4>
+            <div id="recent-posts"></div>
+          </div>
+          <div class="blog-sidebar-card">
+            <h4>Categories</h4>
+            <ul style="display:flex;flex-direction:column;gap:8px;">
+              <li style="font-size:14px;"><a href="insights.html" style="display:flex;justify-content:space-between;"><span>Investment</span><span style="color:var(--gold);">(2)</span></a></li>
+              <li style="font-size:14px;"><a href="insights.html" style="display:flex;justify-content:space-between;"><span>Guide</span><span style="color:var(--gold);">(2)</span></a></li>
+              <li style="font-size:14px;"><a href="insights.html" style="display:flex;justify-content:space-between;"><span>Industry</span><span style="color:var(--gold);">(1)</span></a></li>
+              <li style="font-size:14px;"><a href="insights.html" style="display:flex;justify-content:space-between;"><span>Diaspora</span><span style="color:var(--gold);">(1)</span></a></li>
+            </ul>
+          </div>
+          <div class="blog-sidebar-card" style="background:var(--gold);color:var(--white);">
+            <h4 style="color:var(--white);border-bottom-color:rgba(255,255,255,0.3);">Need Help Investing?</h4>
+            <p style="font-size:14px;line-height:1.6;margin-bottom:16px;">Our property experts can help you find the perfect investment opportunity.</p>
+            <a href="contact.html" class="btn btn-dark" style="width:100;justify-content:center;">Get Free Consultation <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="logo-text"><span>Queen</span> Homes Realty</span>
+            <p>Your trusted partner in finding premium properties across Kenya.</p>
+            <div class="footer-social">
+              <a href="https://www.facebook.com/share/1Lad39tPjH/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/queenhomes?igsh=MTd4MWs2Y2c4YTN4Zw==" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.tiktok.com/@queen.homes0?_r=1&_t=ZS-95QpxwUY257" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+          <div class="footer-column"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="properties.html">Properties</a></li><li><a href="about.html">About Us</a></li><li><a href="insights.html">Insights</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+          <div class="footer-column"><h4>Property Types</h4><ul><li><a href="properties.html">Apartments</a></li><li><a href="properties.html">Villas</a></li><li><a href="properties.html">Townhouses</a></li><li><a href="properties.html">Penthouses</a></li></ul></div>
+          <div class="footer-column"><h4>Contact Us</h4><ul><li><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:8px;"></i> Nairobi, Kenya</li><li><a href="tel:+254707044244"><i class="fas fa-phone" style="color:var(--gold);margin-right:8px;"></i> +254 707 044 244</a></li><li><a href="mailto:info@queenhomesrealty.com"><i class="fas fa-envelope" style="color:var(--gold);margin-right:8px;"></i> info@queenhomesrealty.com</a></li></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p>&copy; 2026 Queen Homes Realty. All rights reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div></div>
+  </footer>
+
+  <div class="whatsapp-widget"><a href="https://wa.me/254707044244" target="_blank" rel="noopener noreferrer" class="whatsapp-btn"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>Reach us on WhatsApp</span></a></div>
+  <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <script src="assets/js/blog-data.js"></script>
+  <script>
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var postId = params.get('id');
+    var post = postId ? getBlogPostById(postId) : null;
+
+    if (!post) {
+      document.getElementById('blog-post-container').innerHTML =
+        '<div style="text-align:center;padding:80px 0;"><h2>Article Not Found</h2><p style="color:var(--text);margin:16px 0 24px;">The article you are looking for does not exist.</p><a href="insights.html" class="btn btn-primary">View All Insights <i class="fas fa-arrow-right"></i></a></div>';
+      document.getElementById('breadcrumb-title').textContent = 'Not Found';
+      return;
+    }
+
+    document.title = post.title + ' | Queen Homes Realty';
+    document.getElementById('breadcrumb-title').textContent = post.title;
+
+    var contentHTML = '';
+    for (var i = 0; i < post.content.length; i++) {
+      contentHTML += '<p>' + post.content[i] + '</p>';
+    }
+
+    var shareUrl = encodeURIComponent(window.location.href);
+    var shareTitle = encodeURIComponent(post.title);
+
+    var html = '<img src="' + post.image + '" alt="' + post.title + '" class="blog-hero-img fade-in" loading="lazy">' +
+      '<div class="blog-meta fade-in">' +
+        '<span><i class="far fa-calendar"></i> ' + post.date + '</span>' +
+        '<span><i class="far fa-user"></i> ' + post.author + '</span>' +
+        '<span class="blog-meta-tag">' + post.category + '</span>' +
+      '</div>' +
+      '<h1 style="font-size:32px;font-weight:600;margin-bottom:24px;line-height:1.3;" class="fade-in">' + post.title + '</h1>' +
+      '<div class="blog-content fade-in">' + contentHTML + '</div>' +
+      '<div class="blog-share fade-in">' +
+        '<span>Share:</span>' +
+        '<a href="https://www.facebook.com/sharer/sharer.php?u=' + shareUrl + '" target="_blank" style="background:#1877F2;"><i class="fab fa-facebook-f"></i></a>' +
+        '<a href="https://twitter.com/intent/tweet?url=' + shareUrl + '&text=' + shareTitle + '" target="_blank" style="background:#1DA1F2;"><i class="fab fa-twitter"></i></a>' +
+        '<a href="https://wa.me/?text=' + shareTitle + '%20' + shareUrl + '" target="_blank" style="background:#25D366;"><i class="fab fa-whatsapp"></i></a>' +
+        '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + shareUrl + '" target="_blank" style="background:#0A66C2;"><i class="fab fa-linkedin-in"></i></a>' +
+      '</div>' +
+      '<div class="blog-nav fade-in">' +
+        '<a href="insights.html"><i class="fas fa-arrow-left"></i> Back to All Insights</a>' +
+      '</div>';
+
+    document.getElementById('blog-post-container').innerHTML = html;
+
+    // Recent posts sidebar
+    var recentHTML = '';
+    var others = BLOG_POSTS.filter(function(p) { return p.id !== post.id; });
+    var recent = others.slice(0, 4);
+    for (var r = 0; r < recent.length; r++) {
+      var rp = recent[r];
+      recentHTML += '<a href="blog-post.html?id=' + rp.id + '" class="blog-sidebar-item">' +
+        '<img src="' + rp.image.replace('w=1200','w=200').replace('h=600','h=140') + '" alt="' + rp.title + '" loading="lazy">' +
+        '<div><h5>' + rp.title + '</h5><span>' + rp.date + '</span></div></a>';
+    }
+    document.getElementById('recent-posts').innerHTML = recentHTML;
+
+    // Trigger fade-in
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
+        }, { threshold: 0.1 });
+        obs.observe(el);
+      } else { el.classList.add('visible'); }
+    });
+  })();
+  </script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
