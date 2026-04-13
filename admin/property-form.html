@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Property — Queen Homes Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-icon">👑</div>
+        <h2><span>Queen</span> Homes<small>Admin Panel</small></h2>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-label">Main</div>
+        <a href="dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="properties.html" class="active"><i class="fas fa-building"></i> Properties</a>
+        <a href="blog.html"><i class="fas fa-newspaper"></i> Blog Posts</a>
+        <a href="inquiries.html"><i class="fas fa-envelope"></i> Inquiries</a>
+        <div class="sidebar-nav-label">Settings</div>
+        <a href="settings.html"><i class="fas fa-cog"></i> Site Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="admin-header-left">
+          <button class="menu-toggle-admin"><i class="fas fa-bars"></i></button>
+          <h1 id="page-title">Add Property</h1>
+        </div>
+        <div class="admin-header-right">
+          <a href="properties.html" class="header-link"><i class="fas fa-arrow-left"></i> Back to Properties</a>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <form id="property-form">
+          <!-- Basic Info -->
+          <div class="card">
+            <div class="card-header"><h3>Basic Information</h3></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="title">Property Title</label>
+                <input type="text" id="title" class="form-control" placeholder="e.g. Luxury 3BR Apartment, Kilimani" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="price">Price</label>
+                  <input type="text" id="price" class="form-control" placeholder="e.g. KES 15,500,000" required>
+                </div>
+                <div class="form-group">
+                  <label for="location">Location</label>
+                  <input type="text" id="location" class="form-control" placeholder="e.g. Kilimani, Nairobi" required>
+                </div>
+              </div>
+              <div class="form-row-3">
+                <div class="form-group">
+                  <label for="type">Property Type</label>
+                  <select id="type" class="form-control">
+                    <option value="Apartment">Apartment</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Townhouse">Townhouse</option>
+                    <option value="Penthouse">Penthouse</option>
+                    <option value="Land">Land</option>
+                    <option value="Commercial">Commercial</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="status">Status</label>
+                  <select id="status" class="form-control">
+                    <option value="For Sale">For Sale</option>
+                    <option value="For Rent">For Rent</option>
+                    <option value="Sold">Sold</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="sqft">Area (sq ft)</label>
+                  <input type="text" id="sqft" class="form-control" placeholder="e.g. 2,500">
+                </div>
+              </div>
+              <div class="form-row-3">
+                <div class="form-group">
+                  <label for="beds">Bedrooms</label>
+                  <input type="number" id="beds" class="form-control" placeholder="3" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="baths">Bathrooms</label>
+                  <input type="number" id="baths" class="form-control" placeholder="2" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="parking">Parking Spaces</label>
+                  <input type="number" id="parking" class="form-control" placeholder="1" min="0">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="card">
+            <div class="card-header"><h3>Description</h3></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="description">Full Description</label>
+                <textarea id="description" class="form-control" rows="6" placeholder="Describe the property in detail..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Images -->
+          <div class="card">
+            <div class="card-header"><h3>Images</h3></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="image">Main Image URL</label>
+                <input type="url" id="image" class="form-control" placeholder="https://images.unsplash.com/...">
+                <p class="form-hint">Paste an image URL or upload to Firebase Storage</p>
+              </div>
+              <div class="form-group">
+                <label>Gallery Images (one URL per line)</label>
+                <textarea id="gallery" class="form-control" rows="4" placeholder="https://images.unsplash.com/photo-1...&#10;https://images.unsplash.com/photo-2...&#10;https://images.unsplash.com/photo-3..."></textarea>
+                <p class="form-hint">Add multiple image URLs, one per line</p>
+              </div>
+              <div class="image-upload" id="image-upload">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Or <span>click here</span> to upload images</p>
+                <p style="font-size:12px;margin-top:4px;">JPG, PNG up to 5MB each</p>
+                <input type="file" id="file-input" accept="image/*" multiple style="display:none;">
+              </div>
+              <div class="image-preview-grid" id="upload-previews"></div>
+            </div>
+          </div>
+
+          <!-- Amenities -->
+          <div class="card">
+            <div class="card-header"><h3>Amenities</h3></div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;" id="amenities-grid">
+                <label class="form-check"><input type="checkbox" value="Swimming Pool"> Swimming Pool</label>
+                <label class="form-check"><input type="checkbox" value="Gym/Fitness Center"> Gym/Fitness Center</label>
+                <label class="form-check"><input type="checkbox" value="24/7 Security"> 24/7 Security</label>
+                <label class="form-check"><input type="checkbox" value="CCTV Surveillance"> CCTV Surveillance</label>
+                <label class="form-check"><input type="checkbox" value="Elevator"> Elevator</label>
+                <label class="form-check"><input type="checkbox" value="Backup Generator"> Backup Generator</label>
+                <label class="form-check"><input type="checkbox" value="Borehole Water"> Borehole Water</label>
+                <label class="form-check"><input type="checkbox" value="Children's Play Area"> Children's Play Area</label>
+                <label class="form-check"><input type="checkbox" value="Garden/Lawn"> Garden/Lawn</label>
+                <label class="form-check"><input type="checkbox" value="Parking Garage"> Parking Garage</label>
+                <label class="form-check"><input type="checkbox" value="Balcony/Terrace"> Balcony/Terrace</label>
+                <label class="form-check"><input type="checkbox" value="Staff Quarters"> Staff Quarters</label>
+                <label class="form-check"><input type="checkbox" value="Solar Panels"> Solar Panels</label>
+                <label class="form-check"><input type="checkbox" value="Smart Home Features"> Smart Home Features</label>
+                <label class="form-check"><input type="checkbox" value="Rooftop Terrace"> Rooftop Terrace</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px;">
+            <a href="properties.html" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+              <i class="fas fa-save"></i> <span>Save Property</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { requireAuth, logout } from './js/auth.js';
+    import { db, storage, collection, doc, getDoc, addDoc, updateDoc, serverTimestamp, ref, uploadBytes, getDownloadURL } from './js/firebase-config.js';
+    import { initSidebar, setUserInitial, showToast } from './js/ui-helpers.js';
+
+    var editId = new URLSearchParams(window.location.search).get('id');
+    var uploadedImageUrls = [];
+
+    requireAuth(async function(user) {
+      initSidebar();
+      setUserInitial(user);
+
+      document.getElementById('logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        logout();
+      });
+
+      // If editing, load existing data
+      if (editId) {
+        document.getElementById('page-title').textContent = 'Edit Property';
+        document.title = 'Edit Property — Queen Homes Admin';
+        try {
+          var docSnap = await getDoc(doc(db, 'properties', editId));
+          if (docSnap.exists()) {
+            var d = docSnap.data();
+            document.getElementById('title').value = d.title || '';
+            document.getElementById('price').value = d.price || '';
+            document.getElementById('location').value = d.location || '';
+            document.getElementById('type').value = d.type || 'Apartment';
+            document.getElementById('status').value = d.status || 'For Sale';
+            document.getElementById('sqft').value = d.sqft || '';
+            document.getElementById('beds').value = d.beds || '';
+            document.getElementById('baths').value = d.baths || '';
+            document.getElementById('parking').value = d.parking || '';
+            document.getElementById('description').value = d.description || '';
+            document.getElementById('image').value = d.image || '';
+            document.getElementById('gallery').value = (d.gallery || []).join('\n');
+
+            // Check amenities
+            if (d.amenities) {
+              document.querySelectorAll('#amenities-grid input[type="checkbox"]').forEach(function(cb) {
+                if (d.amenities.indexOf(cb.value) > -1) cb.checked = true;
+              });
+            }
+
+            document.querySelector('#submit-btn span').textContent = 'Update Property';
+          }
+        } catch (err) {
+          showToast('Failed to load property data', 'error');
+        }
+      }
+
+      // Image upload click
+      document.getElementById('image-upload').addEventListener('click', function() {
+        document.getElementById('file-input').click();
+      });
+
+      // File upload handler
+      document.getElementById('file-input').addEventListener('change', async function(e) {
+        var files = e.target.files;
+        for (var i = 0; i < files.length; i++) {
+          var file = files[i];
+          if (file.size > 5 * 1024 * 1024) {
+            showToast(file.name + ' is too large (max 5MB)', 'error');
+            continue;
+          }
+          try {
+            var storageRef = ref(storage, 'properties/' + Date.now() + '_' + file.name);
+            var snapshot = await uploadBytes(storageRef, file);
+            var url = await getDownloadURL(snapshot.ref);
+            uploadedImageUrls.push(url);
+
+            // Show preview
+            var previewDiv = document.getElementById('upload-previews');
+            var div = document.createElement('div');
+            div.className = 'image-preview';
+            div.innerHTML = '<img src="' + url + '" alt=""><button type="button" class="remove-img" data-url="' + url + '"><i class="fas fa-times"></i></button>';
+            previewDiv.appendChild(div);
+
+            div.querySelector('.remove-img').addEventListener('click', function() {
+              var u = this.dataset.url;
+              uploadedImageUrls = uploadedImageUrls.filter(function(x) { return x !== u; });
+              this.parentElement.remove();
+            });
+
+            showToast('Image uploaded successfully', 'success');
+          } catch (err) {
+            showToast('Failed to upload ' + file.name, 'error');
+          }
+        }
+      });
+
+      // Form submit
+      document.getElementById('property-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Saving...';
+
+        var amenities = [];
+        document.querySelectorAll('#amenities-grid input:checked').forEach(function(cb) {
+          amenities.push(cb.value);
+        });
+
+        var galleryText = document.getElementById('gallery').value.trim();
+        var galleryUrls = galleryText ? galleryText.split('\n').map(function(u) { return u.trim(); }).filter(Boolean) : [];
+        // Add uploaded images to gallery
+        galleryUrls = galleryUrls.concat(uploadedImageUrls);
+
+        var data = {
+          title: document.getElementById('title').value.trim(),
+          price: document.getElementById('price').value.trim(),
+          location: document.getElementById('location').value.trim(),
+          type: document.getElementById('type').value,
+          status: document.getElementById('status').value,
+          sqft: document.getElementById('sqft').value.trim(),
+          beds: parseInt(document.getElementById('beds').value) || 0,
+          baths: parseInt(document.getElementById('baths').value) || 0,
+          parking: parseInt(document.getElementById('parking').value) || 0,
+          description: document.getElementById('description').value.trim(),
+          image: document.getElementById('image').value.trim() || (galleryUrls.length ? galleryUrls[0] : ''),
+          gallery: galleryUrls,
+          amenities: amenities,
+          updatedAt: serverTimestamp()
+        };
+
+        try {
+          if (editId) {
+            await updateDoc(doc(db, 'properties', editId), data);
+            showToast('Property updated successfully!', 'success');
+          } else {
+            data.createdAt = serverTimestamp();
+            await addDoc(collection(db, 'properties'), data);
+            showToast('Property added successfully!', 'success');
+          }
+          setTimeout(function() { window.location.href = 'properties.html'; }, 1200);
+        } catch (err) {
+          console.error(err);
+          showToast('Failed to save property. Check console for details.', 'error');
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-save"></i> <span>Save Property</span>';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

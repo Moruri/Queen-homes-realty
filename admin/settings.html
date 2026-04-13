@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Queen Homes Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-icon">👑</div>
+        <h2><span>Queen</span> Homes<small>Admin Panel</small></h2>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-label">Main</div>
+        <a href="dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="properties.html"><i class="fas fa-building"></i> Properties</a>
+        <a href="blog.html"><i class="fas fa-newspaper"></i> Blog Posts</a>
+        <a href="inquiries.html"><i class="fas fa-envelope"></i> Inquiries</a>
+        <div class="sidebar-nav-label">Settings</div>
+        <a href="settings.html" class="active"><i class="fas fa-cog"></i> Site Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="admin-header-left">
+          <button class="menu-toggle-admin"><i class="fas fa-bars"></i></button>
+          <h1>Site Settings</h1>
+        </div>
+        <div class="admin-header-right">
+          <div class="admin-user">
+            <div class="admin-user-avatar">A</div>
+            <span>Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <form id="settings-form">
+          <!-- Contact Info -->
+          <div class="card">
+            <div class="card-header"><h3>Contact Information</h3></div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" class="form-control" value="+254 707 044 244">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" class="form-control" value="info@queenhomesrealty.com">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="address">Office Address</label>
+                  <input type="text" id="address" class="form-control" value="Nairobi, Kenya">
+                </div>
+                <div class="form-group">
+                  <label for="whatsapp">WhatsApp Number</label>
+                  <input type="tel" id="whatsapp" class="form-control" value="254707044244">
+                  <p class="form-hint">International format, no + or spaces</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Media -->
+          <div class="card">
+            <div class="card-header"><h3>Social Media Links</h3></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="facebook"><i class="fab fa-facebook" style="color:#1877F2;"></i> Facebook URL</label>
+                <input type="url" id="facebook" class="form-control" value="https://www.facebook.com/share/1Lad39tPjH/">
+              </div>
+              <div class="form-group">
+                <label for="instagram"><i class="fab fa-instagram" style="color:#E4405F;"></i> Instagram URL</label>
+                <input type="url" id="instagram" class="form-control" value="https://www.instagram.com/queenhomes?igsh=MTd4MWs2Y2c4YTN4Zw==">
+              </div>
+              <div class="form-group">
+                <label for="tiktok"><i class="fab fa-tiktok"></i> TikTok URL</label>
+                <input type="url" id="tiktok" class="form-control" value="https://www.tiktok.com/@queen.homes0?_r=1&_t=ZS-95QpxwUY257">
+              </div>
+            </div>
+          </div>
+
+          <!-- Working Hours -->
+          <div class="card">
+            <div class="card-header"><h3>Working Hours</h3></div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="hours-weekday">Weekdays</label>
+                  <input type="text" id="hours-weekday" class="form-control" value="Mon - Fri: 9am - 8pm">
+                </div>
+                <div class="form-group">
+                  <label for="hours-weekend">Weekends</label>
+                  <input type="text" id="hours-weekend" class="form-control" value="Saturday: 10am - 4pm">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Data Migration -->
+          <div class="card">
+            <div class="card-header"><h3>Data Migration</h3></div>
+            <div class="card-body">
+              <p style="color:var(--gray-400);font-size:14px;margin-bottom:16px;">
+                Import your existing property and blog data from the static JS files into Firebase.
+                This only needs to be done once.
+              </p>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button type="button" class="btn btn-secondary" id="migrate-properties">
+                  <i class="fas fa-building"></i> Import Properties
+                </button>
+                <button type="button" class="btn btn-secondary" id="migrate-blogs">
+                  <i class="fas fa-newspaper"></i> Import Blog Posts
+                </button>
+              </div>
+              <div id="migration-status" style="margin-top:12px;"></div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px;">
+            <button type="submit" class="btn btn-primary" id="save-btn">
+              <i class="fas fa-save"></i> Save Settings
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load static data files for migration -->
+  <script src="../assets/js/properties-data.js"></script>
+  <script src="../assets/js/blog-data.js"></script>
+
+  <script type="module">
+    import { requireAuth, logout } from './js/auth.js';
+    import { db, collection, doc, getDoc, setDoc, addDoc, getDocs, serverTimestamp } from './js/firebase-config.js';
+    import { initSidebar, setUserInitial, showToast } from './js/ui-helpers.js';
+
+    requireAuth(async function(user) {
+      initSidebar();
+      setUserInitial(user);
+
+      document.getElementById('logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        logout();
+      });
+
+      // Load settings from Firestore
+      try {
+        var settingsDoc = await getDoc(doc(db, 'settings', 'site'));
+        if (settingsDoc.exists()) {
+          var s = settingsDoc.data();
+          if (s.phone) document.getElementById('phone').value = s.phone;
+          if (s.email) document.getElementById('email').value = s.email;
+          if (s.address) document.getElementById('address').value = s.address;
+          if (s.whatsapp) document.getElementById('whatsapp').value = s.whatsapp;
+          if (s.facebook) document.getElementById('facebook').value = s.facebook;
+          if (s.instagram) document.getElementById('instagram').value = s.instagram;
+          if (s.tiktok) document.getElementById('tiktok').value = s.tiktok;
+          if (s.hoursWeekday) document.getElementById('hours-weekday').value = s.hoursWeekday;
+          if (s.hoursWeekend) document.getElementById('hours-weekend').value = s.hoursWeekend;
+        }
+      } catch (err) { /* use defaults */ }
+
+      // Save settings
+      document.getElementById('settings-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('save-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Saving...';
+
+        try {
+          await setDoc(doc(db, 'settings', 'site'), {
+            phone: document.getElementById('phone').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            address: document.getElementById('address').value.trim(),
+            whatsapp: document.getElementById('whatsapp').value.trim(),
+            facebook: document.getElementById('facebook').value.trim(),
+            instagram: document.getElementById('instagram').value.trim(),
+            tiktok: document.getElementById('tiktok').value.trim(),
+            hoursWeekday: document.getElementById('hours-weekday').value.trim(),
+            hoursWeekend: document.getElementById('hours-weekend').value.trim(),
+            updatedAt: serverTimestamp()
+          });
+          showToast('Settings saved!', 'success');
+        } catch (err) {
+          showToast('Failed to save settings', 'error');
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Save Settings';
+      });
+
+      // ── Migrate Properties ──
+      document.getElementById('migrate-properties').addEventListener('click', async function() {
+        var btn = this;
+        var status = document.getElementById('migration-status');
+
+        if (typeof PROPERTIES_DATA === 'undefined') {
+          showToast('Properties data file not found', 'error');
+          return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Importing...';
+        status.innerHTML = '<p style="color:var(--gray-400);font-size:13px;">Importing properties...</p>';
+
+        var count = 0;
+        try {
+          for (var i = 0; i < PROPERTIES_DATA.length; i++) {
+            var p = PROPERTIES_DATA[i];
+            await addDoc(collection(db, 'properties'), {
+              title: p.title || '',
+              price: p.price || '',
+              location: p.location || '',
+              type: p.type || 'Apartment',
+              status: p.status || 'For Sale',
+              beds: p.beds || 0,
+              baths: p.baths || 0,
+              sqft: p.sqft || '',
+              description: p.description || '',
+              image: p.image || (p.images ? p.images[0] : ''),
+              gallery: p.gallery || p.images || [],
+              amenities: p.amenities || [],
+              parking: p.parking || 0,
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp()
+            });
+            count++;
+          }
+          status.innerHTML = '<p style="color:var(--green);font-size:13px;"><i class="fas fa-check-circle"></i> Imported ' + count + ' properties successfully!</p>';
+          showToast(count + ' properties imported!', 'success');
+        } catch (err) {
+          console.error(err);
+          status.innerHTML = '<p style="color:var(--red);font-size:13px;">Error after importing ' + count + ' properties. Check console.</p>';
+          showToast('Migration error', 'error');
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-building"></i> Import Properties';
+      });
+
+      // ── Migrate Blog Posts ──
+      document.getElementById('migrate-blogs').addEventListener('click', async function() {
+        var btn = this;
+        var status = document.getElementById('migration-status');
+
+        if (typeof BLOG_POSTS === 'undefined') {
+          showToast('Blog data file not found', 'error');
+          return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Importing...';
+        status.innerHTML = '<p style="color:var(--gray-400);font-size:13px;">Importing blog posts...</p>';
+
+        var count = 0;
+        try {
+          for (var i = 0; i < BLOG_POSTS.length; i++) {
+            var b = BLOG_POSTS[i];
+            var slug = b.id || b.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            await addDoc(collection(db, 'blogs'), {
+              title: b.title || '',
+              slug: slug,
+              content: b.content || [],
+              category: b.category || 'Industry',
+              author: b.author || 'Queen Homes Realty',
+              image: b.image || '',
+              date: b.date || '',
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp()
+            });
+            count++;
+          }
+          status.innerHTML = '<p style="color:var(--green);font-size:13px;"><i class="fas fa-check-circle"></i> Imported ' + count + ' blog posts successfully!</p>';
+          showToast(count + ' blog posts imported!', 'success');
+        } catch (err) {
+          console.error(err);
+          status.innerHTML = '<p style="color:var(--red);font-size:13px;">Error after importing ' + count + ' posts. Check console.</p>';
+          showToast('Migration error', 'error');
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-newspaper"></i> Import Blog Posts';
+      });
+    });
+  </script>
+
+</body>
+</html>

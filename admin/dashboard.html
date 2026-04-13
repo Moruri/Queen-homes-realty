@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Queen Homes Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-icon">👑</div>
+        <h2><span>Queen</span> Homes<small>Admin Panel</small></h2>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-label">Main</div>
+        <a href="dashboard.html" class="active"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="properties.html"><i class="fas fa-building"></i> Properties</a>
+        <a href="blog.html"><i class="fas fa-newspaper"></i> Blog Posts</a>
+        <a href="inquiries.html"><i class="fas fa-envelope"></i> Inquiries <span class="badge-count" id="sidebar-inquiry-count" style="display:none;">0</span></a>
+        <div class="sidebar-nav-label">Settings</div>
+        <a href="settings.html"><i class="fas fa-cog"></i> Site Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="admin-header-left">
+          <button class="menu-toggle-admin"><i class="fas fa-bars"></i></button>
+          <h1>Dashboard</h1>
+        </div>
+        <div class="admin-header-right">
+          <a href="../index.html" target="_blank" class="header-link"><i class="fas fa-external-link-alt"></i> View Site</a>
+          <div class="admin-user">
+            <div class="admin-user-avatar">A</div>
+            <span>Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <h3>Total Properties</h3>
+              <div class="stat-value" id="stat-properties">—</div>
+            </div>
+            <div class="stat-card-icon gold"><i class="fas fa-building"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <h3>Blog Posts</h3>
+              <div class="stat-value" id="stat-blogs">—</div>
+            </div>
+            <div class="stat-card-icon blue"><i class="fas fa-newspaper"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <h3>Inquiries</h3>
+              <div class="stat-value" id="stat-inquiries">—</div>
+            </div>
+            <div class="stat-card-icon green"><i class="fas fa-envelope"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <h3>Unread</h3>
+              <div class="stat-value" id="stat-unread">—</div>
+            </div>
+            <div class="stat-card-icon red"><i class="fas fa-bell"></i></div>
+          </div>
+        </div>
+
+        <!-- Two-column grid -->
+        <div class="grid-2">
+          <!-- Recent Properties -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Properties</h3>
+              <a href="properties.html" class="btn btn-sm btn-secondary">View All</a>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-properties">
+                    <tr><td colspan="3"><div class="page-loader"><span class="spinner"></span></div></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Inquiries -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Inquiries</h3>
+              <a href="inquiries.html" class="btn btn-sm btn-secondary">View All</a>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div id="recent-inquiries">
+                <div class="page-loader"><span class="spinner"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Blog Posts -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Recent Blog Posts</h3>
+            <a href="blog.html" class="btn btn-sm btn-secondary">View All</a>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-blogs">
+                  <tr><td colspan="3"><div class="page-loader"><span class="spinner"></span></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { requireAuth, logout } from './js/auth.js';
+    import { db, collection, getDocs, query, orderBy, limit, where } from './js/firebase-config.js';
+    import { initSidebar, setUserInitial, formatDate, truncate } from './js/ui-helpers.js';
+
+    requireAuth(async function(user) {
+      initSidebar();
+      setUserInitial(user);
+
+      // Logout
+      document.getElementById('logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        logout();
+      });
+
+      // Load stats
+      try {
+        var propsSnap = await getDocs(collection(db, 'properties'));
+        var blogsSnap = await getDocs(collection(db, 'properties'));
+        var blogsSnapReal = await getDocs(collection(db, 'blogs'));
+        var inquiriesSnap = await getDocs(collection(db, 'inquiries'));
+
+        var unreadCount = 0;
+        inquiriesSnap.forEach(function(doc) {
+          if (!doc.data().read) unreadCount++;
+        });
+
+        document.getElementById('stat-properties').textContent = propsSnap.size;
+        document.getElementById('stat-blogs').textContent = blogsSnapReal.size;
+        document.getElementById('stat-inquiries').textContent = inquiriesSnap.size;
+        document.getElementById('stat-unread').textContent = unreadCount;
+
+        // Sidebar inquiry badge
+        if (unreadCount > 0) {
+          var badge = document.getElementById('sidebar-inquiry-count');
+          badge.textContent = unreadCount;
+          badge.style.display = 'inline';
+        }
+
+      } catch (err) {
+        console.error('Stats error:', err);
+      }
+
+      // Load recent properties
+      try {
+        var propsQ = query(collection(db, 'properties'), orderBy('createdAt', 'desc'), limit(5));
+        var snap = await getDocs(propsQ);
+        var html = '';
+
+        if (snap.empty) {
+          html = '<tr><td colspan="3" class="empty-state" style="padding:40px;"><i class="fas fa-building" style="font-size:32px;color:var(--dark-5);"></i><p style="color:var(--gray-500);margin-top:8px;">No properties yet</p></td></tr>';
+        } else {
+          snap.forEach(function(doc) {
+            var d = doc.data();
+            var statusClass = d.status === 'For Sale' ? 'badge-sale' : d.status === 'For Rent' ? 'badge-rent' : 'badge-sold';
+            html +=
+              '<tr>' +
+                '<td><div class="table-title">' + truncate(d.title, 30) + '</div><div class="table-sub">' + (d.location || '') + '</div></td>' +
+                '<td>' + (d.price || '—') + '</td>' +
+                '<td><span class="badge ' + statusClass + '">' + (d.status || '—') + '</span></td>' +
+              '</tr>';
+          });
+        }
+
+        document.getElementById('recent-properties').innerHTML = html;
+      } catch (err) {
+        document.getElementById('recent-properties').innerHTML = '<tr><td colspan="3" style="padding:20px;color:var(--gray-500);">Could not load properties</td></tr>';
+      }
+
+      // Load recent inquiries
+      try {
+        var inqQ = query(collection(db, 'inquiries'), orderBy('createdAt', 'desc'), limit(5));
+        var inqSnap = await getDocs(inqQ);
+        var inqHtml = '';
+
+        if (inqSnap.empty) {
+          inqHtml = '<div class="empty-state" style="padding:40px;"><i class="fas fa-envelope"></i><p style="color:var(--gray-500);">No inquiries yet</p></div>';
+        } else {
+          inqSnap.forEach(function(doc) {
+            var d = doc.data();
+            var initial = d.firstName ? d.firstName.charAt(0).toUpperCase() : '?';
+            var unread = !d.read ? ' unread' : '';
+            inqHtml +=
+              '<div class="inquiry-card' + unread + '">' +
+                '<div class="inquiry-avatar">' + initial + '</div>' +
+                '<div class="inquiry-body">' +
+                  '<div class="inquiry-header"><h4>' + (d.firstName || '') + ' ' + (d.lastName || '') + '</h4><time>' + formatDate(d.createdAt) + '</time></div>' +
+                  '<div class="inquiry-subject">' + (d.subject || 'General Inquiry') + '</div>' +
+                  '<div class="inquiry-excerpt">' + truncate(d.message, 60) + '</div>' +
+                '</div>' +
+              '</div>';
+          });
+        }
+
+        document.getElementById('recent-inquiries').innerHTML = inqHtml;
+      } catch (err) {
+        document.getElementById('recent-inquiries').innerHTML = '<div style="padding:20px;color:var(--gray-500);">Could not load inquiries</div>';
+      }
+
+      // Load recent blogs
+      try {
+        var blogQ = query(collection(db, 'blogs'), orderBy('createdAt', 'desc'), limit(5));
+        var blogSnap = await getDocs(blogQ);
+        var blogHtml = '';
+
+        if (blogSnap.empty) {
+          blogHtml = '<tr><td colspan="3" class="empty-state" style="padding:40px;"><i class="fas fa-newspaper" style="font-size:32px;color:var(--dark-5);"></i><p style="color:var(--gray-500);margin-top:8px;">No blog posts yet</p></td></tr>';
+        } else {
+          blogSnap.forEach(function(doc) {
+            var d = doc.data();
+            blogHtml +=
+              '<tr>' +
+                '<td class="table-title">' + truncate(d.title, 45) + '</td>' +
+                '<td><span class="badge badge-new">' + (d.category || '—') + '</span></td>' +
+                '<td>' + formatDate(d.createdAt) + '</td>' +
+              '</tr>';
+          });
+        }
+
+        document.getElementById('recent-blogs').innerHTML = blogHtml;
+      } catch (err) {
+        document.getElementById('recent-blogs').innerHTML = '<tr><td colspan="3" style="padding:20px;color:var(--gray-500);">Could not load blog posts</td></tr>';
+      }
+
+    });
+  </script>
+
+</body>
+</html>

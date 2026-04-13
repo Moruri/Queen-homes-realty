@@ -203,5 +203,50 @@
 
   <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
   <script src="assets/js/main.js"></script>
+
+  <!-- Firebase: Save contact form to Firestore -->
+  <script type="module">
+    import { submitInquiry } from './assets/js/firebase-public.js';
+
+    var form = document.querySelector('.contact-form form');
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        var originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+
+        try {
+          await submitInquiry({
+            firstName: document.getElementById('fname').value.trim(),
+            lastName: document.getElementById('lname').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value.trim()
+          });
+
+          form.reset();
+          btn.innerHTML = 'Message Sent! <i class="fas fa-check"></i>';
+          btn.style.background = '#22c55e';
+          setTimeout(function() {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+            btn.disabled = false;
+          }, 3000);
+        } catch (err) {
+          console.error('Inquiry submit error:', err);
+          btn.innerHTML = 'Failed — Try Again <i class="fas fa-exclamation-triangle"></i>';
+          btn.style.background = '#ef4444';
+          setTimeout(function() {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+            btn.disabled = false;
+          }, 3000);
+        }
+      });
+    }
+  </script>
 </body>
 </html>

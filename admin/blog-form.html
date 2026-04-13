@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Blog Post — Queen Homes Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-icon">👑</div>
+        <h2><span>Queen</span> Homes<small>Admin Panel</small></h2>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-label">Main</div>
+        <a href="dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="properties.html"><i class="fas fa-building"></i> Properties</a>
+        <a href="blog.html" class="active"><i class="fas fa-newspaper"></i> Blog Posts</a>
+        <a href="inquiries.html"><i class="fas fa-envelope"></i> Inquiries</a>
+        <div class="sidebar-nav-label">Settings</div>
+        <a href="settings.html"><i class="fas fa-cog"></i> Site Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="admin-header-left">
+          <button class="menu-toggle-admin"><i class="fas fa-bars"></i></button>
+          <h1 id="page-title">New Blog Post</h1>
+        </div>
+        <div class="admin-header-right">
+          <a href="blog.html" class="header-link"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <form id="blog-form">
+          <div class="grid-2">
+            <!-- Left Column -->
+            <div>
+              <div class="card">
+                <div class="card-header"><h3>Post Details</h3></div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" class="form-control" placeholder="Enter post title..." required>
+                  </div>
+                  <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea id="content" class="form-control" rows="14" placeholder="Write your blog post content here...&#10;&#10;Separate paragraphs with a blank line." required></textarea>
+                    <p class="form-hint">Separate paragraphs with blank lines. Each paragraph becomes its own block on the public site.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+              <div class="card">
+                <div class="card-header"><h3>Publishing</h3></div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" class="form-control">
+                      <option value="Industry">Industry</option>
+                      <option value="Investment">Investment</option>
+                      <option value="Guide">Guide</option>
+                      <option value="Diaspora">Diaspora</option>
+                      <option value="Market Update">Market Update</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" id="author" class="form-control" value="Queen Homes Realty">
+                  </div>
+                  <div class="form-group">
+                    <label for="date">Publish Date</label>
+                    <input type="date" id="date" class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header"><h3>Featured Image</h3></div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="image">Image URL</label>
+                    <input type="url" id="image" class="form-control" placeholder="https://images.unsplash.com/...">
+                  </div>
+                  <div id="image-preview" style="margin-top:12px;border-radius:8px;overflow:hidden;display:none;">
+                    <img id="preview-img" src="" alt="" style="width:100%;height:180px;object-fit:cover;">
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;justify-content:flex-end;">
+                <a href="blog.html" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary" id="submit-btn">
+                  <i class="fas fa-save"></i> <span>Publish Post</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { requireAuth, logout } from './js/auth.js';
+    import { db, collection, doc, getDoc, addDoc, updateDoc, serverTimestamp } from './js/firebase-config.js';
+    import { initSidebar, setUserInitial, showToast } from './js/ui-helpers.js';
+
+    var editId = new URLSearchParams(window.location.search).get('id');
+
+    requireAuth(async function(user) {
+      initSidebar();
+      setUserInitial(user);
+
+      document.getElementById('logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        logout();
+      });
+
+      // Set today's date as default
+      document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+      // Image preview
+      document.getElementById('image').addEventListener('input', function() {
+        var url = this.value.trim();
+        var preview = document.getElementById('image-preview');
+        var img = document.getElementById('preview-img');
+        if (url) {
+          img.src = url;
+          preview.style.display = 'block';
+        } else {
+          preview.style.display = 'none';
+        }
+      });
+
+      // If editing, load existing data
+      if (editId) {
+        document.getElementById('page-title').textContent = 'Edit Blog Post';
+        document.title = 'Edit Blog Post — Queen Homes Admin';
+        try {
+          var docSnap = await getDoc(doc(db, 'blogs', editId));
+          if (docSnap.exists()) {
+            var d = docSnap.data();
+            document.getElementById('title').value = d.title || '';
+            // Content: join paragraphs with double newline
+            document.getElementById('content').value = (d.content || []).join('\n\n');
+            document.getElementById('category').value = d.category || 'Industry';
+            document.getElementById('author').value = d.author || 'Queen Homes Realty';
+            document.getElementById('image').value = d.image || '';
+
+            if (d.date) {
+              // Try to parse date string to input format
+              var parsed = new Date(d.date);
+              if (!isNaN(parsed)) {
+                document.getElementById('date').value = parsed.toISOString().split('T')[0];
+              }
+            }
+
+            // Show image preview
+            if (d.image) {
+              document.getElementById('preview-img').src = d.image;
+              document.getElementById('image-preview').style.display = 'block';
+            }
+
+            document.querySelector('#submit-btn span').textContent = 'Update Post';
+          }
+        } catch (err) {
+          showToast('Failed to load blog post', 'error');
+        }
+      }
+
+      // Form submit
+      document.getElementById('blog-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Saving...';
+
+        // Split content into paragraphs
+        var contentText = document.getElementById('content').value.trim();
+        var paragraphs = contentText.split(/\n\s*\n/).map(function(p) { return p.trim(); }).filter(Boolean);
+
+        var dateInput = document.getElementById('date').value;
+        var dateFormatted = '';
+        if (dateInput) {
+          var d = new Date(dateInput);
+          dateFormatted = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        // Generate slug from title
+        var title = document.getElementById('title').value.trim();
+        var slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+        var data = {
+          title: title,
+          slug: slug,
+          content: paragraphs,
+          category: document.getElementById('category').value,
+          author: document.getElementById('author').value.trim(),
+          image: document.getElementById('image').value.trim(),
+          date: dateFormatted,
+          updatedAt: serverTimestamp()
+        };
+
+        try {
+          if (editId) {
+            await updateDoc(doc(db, 'blogs', editId), data);
+            showToast('Blog post updated!', 'success');
+          } else {
+            data.createdAt = serverTimestamp();
+            await addDoc(collection(db, 'blogs'), data);
+            showToast('Blog post published!', 'success');
+          }
+          setTimeout(function() { window.location.href = 'blog.html'; }, 1200);
+        } catch (err) {
+          console.error(err);
+          showToast('Failed to save blog post', 'error');
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-save"></i> <span>Publish Post</span>';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
