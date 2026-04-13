@@ -211,7 +211,7 @@
         var btn = this;
         var status = document.getElementById('migration-status');
 
-        if (typeof PROPERTIES_DATA === 'undefined') {
+        if (typeof PROPERTIES === 'undefined') {
           showToast('Properties data file not found', 'error');
           return;
         }
@@ -222,14 +222,15 @@
 
         var count = 0;
         try {
-          for (var i = 0; i < PROPERTIES_DATA.length; i++) {
-            var p = PROPERTIES_DATA[i];
+          for (var i = 0; i < PROPERTIES.length; i++) {
+            var p = PROPERTIES[i];
+            var pStatus = (p.status === 'rent') ? 'For Rent' : (p.status === 'sale') ? 'For Sale' : (p.status || 'For Sale');
             await addDoc(collection(db, 'properties'), {
               title: p.title || '',
               price: p.price || '',
               location: p.location || '',
               type: p.type || 'Apartment',
-              status: p.status || 'For Sale',
+              status: pStatus,
               beds: p.beds || 0,
               baths: p.baths || 0,
               sqft: p.sqft || '',

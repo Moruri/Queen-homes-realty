@@ -139,12 +139,41 @@
 
   <!-- Load property data then render -->
   <script src="assets/js/properties-data.js"></script>
-  <script>
-  (function() {
-    // Get property ID from URL: property-detail.html?id=amethyst-kilimani
-    var params = new URLSearchParams(window.location.search);
-    var propId = params.get('id');
-    var prop = propId ? getPropertyById(propId) : null;
+  <script type="module">
+    import { fetchPropertyById, fetchProperties } from './assets/js/firebase-public.js';
+
+    (async function() {
+      var params = new URLSearchParams(window.location.search);
+      var propId = params.get('id');
+      var prop = null;
+      var allProperties = [];
+      var isFirebase = false;
+
+      // Try Firebase first
+      try {
+        prop = await fetchPropertyById(propId);
+        if (prop) {
+          isFirebase = true;
+          // Normalize Firebase data to match expected format
+          prop.priceNum = parseInt((prop.price || '0').replace(/[^0-9]/g, '')) || 0;
+          prop.status = (prop.status || '').toLowerCase().indexOf('rent') > -1 ? 'rent' : 'sale';
+          prop.image = prop.image || (prop.gallery && prop.gallery[0]) || '';
+          prop.gallery = prop.gallery || [];
+          prop.amenities = prop.amenities || [];
+          prop.parking = prop.parking || 0;
+          prop.sqft = prop.sqft || '—';
+          // Get all for similar properties
+          allProperties = await fetchProperties();
+        }
+      } catch (err) {
+        console.log('Firebase not available, falling back to static data:', err.message);
+      }
+
+      // Fallback to static data
+      if (!prop && typeof getPropertyById === 'function') {
+        prop = propId ? getPropertyById(propId) : null;
+        if (typeof PROPERTIES !== 'undefined') allProperties = PROPERTIES;
+      }
 
     if (!prop) {
       document.getElementById('property-detail-container').innerHTML =
@@ -244,7 +273,7 @@
     document.getElementById('property-detail-container').innerHTML = html;
 
     // Build similar properties (3 random ones, excluding current)
-    var others = PROPERTIES.filter(function(p) { return p.id !== prop.id; });
+    var others = allProperties.filter(function(p) { return p.id !== prop.id; });
     others.sort(function() { return 0.5 - Math.random(); });
     var similar = others.slice(0, 3);
     var simHTML = '';
@@ -298,4 +327,5 @@
   </script>
   <script src="assets/js/main.js"></script>
 </body>
+
 </html>

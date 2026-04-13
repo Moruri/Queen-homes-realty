@@ -92,6 +92,7 @@
           </div>
 
           <div class="property-grid" id="property-grid">
+            <!-- Properties loaded dynamically from Firebase -->
             <div class="property-card fade-in" data-type="apartment" data-location="kilimani" data-status="sale" data-price="7000000">
               <div class="property-image">
                 <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop" alt="Amethyst Apartments" loading="lazy">
@@ -472,5 +473,69 @@
   <div class="whatsapp-widget"><a href="https://wa.me/254707044244" target="_blank" rel="noopener noreferrer" class="whatsapp-btn"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>Reach us on WhatsApp</span></a></div>
   <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
   <script src="assets/js/main.js"></script>
+
+  <!-- Firebase: Load properties dynamically -->
+  <script type="module">
+    import { fetchProperties } from './assets/js/firebase-public.js';
+
+    (async function() {
+      try {
+        var properties = await fetchProperties();
+        if (!properties || properties.length === 0) return; // keep static HTML
+
+        var grid = document.getElementById('property-grid');
+        var html = '';
+
+        properties.forEach(function(p) {
+          var statusClass = (p.status || '').toLowerCase().indexOf('rent') > -1 ? 'badge-rent' : 'badge-sale';
+          var statusLabel = (p.status || '').toLowerCase().indexOf('rent') > -1 ? 'For Rent' : 'For Sale';
+          var statusData = (p.status || '').toLowerCase().indexOf('rent') > -1 ? 'rent' : 'sale';
+          var priceNum = parseInt((p.price || '0').replace(/[^0-9]/g, '')) || 0;
+          var priceDisplay = (p.status || '').toLowerCase().indexOf('rent') > -1 ? (p.price + ' <small>/month</small>') : p.price;
+          var typeData = (p.type || 'apartment').toLowerCase();
+          var locationData = (p.location || '').split(',')[0].trim().toLowerCase();
+          var img = p.image || (p.gallery && p.gallery[0]) || 'https://via.placeholder.com/600x400/1a1a1a/737373?text=No+Image';
+
+          html +=
+            '<div class="property-card fade-in" data-type="' + typeData + '" data-location="' + locationData + '" data-status="' + statusData + '" data-price="' + priceNum + '">' +
+              '<div class="property-image">' +
+                '<img src="' + img + '" alt="' + (p.title || '') + '" loading="lazy">' +
+                '<div class="property-badge"><span class="badge ' + statusClass + '">' + statusLabel + '</span></div>' +
+                '<button class="property-favorite"><i class="far fa-heart"></i></button>' +
+                '<div class="property-price">' + priceDisplay + '</div>' +
+              '</div>' +
+              '<div class="property-info">' +
+                '<h3><a href="property-detail.html?id=' + p.id + '">' + (p.title || 'Untitled') + '</a></h3>' +
+                '<div class="property-location"><i class="fas fa-map-marker-alt"></i> ' + (p.location || '') + '</div>' +
+                '<div class="property-details">' +
+                  '<div class="property-detail"><i class="fas fa-bed"></i> ' + (p.beds || 0) + ' Beds</div>' +
+                  '<div class="property-detail"><i class="fas fa-bath"></i> ' + (p.baths || 0) + ' Baths</div>' +
+                  '<div class="property-detail"><i class="fas fa-ruler-combined"></i> ' + (p.sqft || '—') + ' ft&sup2;</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+        });
+
+        grid.innerHTML = html;
+        document.getElementById('results-count').textContent = properties.length;
+
+        // Re-init pagination and filters from main.js
+        if (window.initPropertyPagination) window.initPropertyPagination();
+
+        // Re-trigger fade-in
+        grid.querySelectorAll('.fade-in').forEach(function(el) {
+          if ('IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(function(entries) {
+              entries.forEach(function(entry) { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
+            }, { threshold: 0.1 });
+            obs.observe(el);
+          } else { el.classList.add('visible'); }
+        });
+
+      } catch (err) {
+        console.log('Firebase not available, using static properties:', err.message);
+      }
+    })();
+  </script>
 </body>
 </html>

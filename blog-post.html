@@ -141,73 +141,94 @@
   <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
   <script src="assets/js/blog-data.js"></script>
-  <script>
-  (function() {
-    var params = new URLSearchParams(window.location.search);
-    var postId = params.get('id');
-    var post = postId ? getBlogPostById(postId) : null;
+  <script type="module">
+    import { fetchBlogById, fetchBlogs } from './assets/js/firebase-public.js';
 
-    if (!post) {
-      document.getElementById('blog-post-container').innerHTML =
-        '<div style="text-align:center;padding:80px 0;"><h2>Article Not Found</h2><p style="color:var(--text);margin:16px 0 24px;">The article you are looking for does not exist.</p><a href="insights.html" class="btn btn-primary">View All Insights <i class="fas fa-arrow-right"></i></a></div>';
-      document.getElementById('breadcrumb-title').textContent = 'Not Found';
-      return;
-    }
+    (async function() {
+      var params = new URLSearchParams(window.location.search);
+      var postId = params.get('id');
+      var post = null;
+      var allBlogs = [];
 
-    document.title = post.title + ' | Queen Homes Realty';
-    document.getElementById('breadcrumb-title').textContent = post.title;
+      // Try Firebase first
+      try {
+        post = await fetchBlogById(postId);
+        if (post) {
+          allBlogs = await fetchBlogs();
+        }
+      } catch (err) {
+        console.log('Firebase not available, falling back to static data:', err.message);
+      }
 
-    var contentHTML = '';
-    for (var i = 0; i < post.content.length; i++) {
-      contentHTML += '<p>' + post.content[i] + '</p>';
-    }
+      // Fallback to static data
+      if (!post && typeof getBlogPostById === 'function') {
+        post = postId ? getBlogPostById(postId) : null;
+        if (typeof BLOG_POSTS !== 'undefined') allBlogs = BLOG_POSTS;
+      }
 
-    var shareUrl = encodeURIComponent(window.location.href);
-    var shareTitle = encodeURIComponent(post.title);
+      if (!post) {
+        document.getElementById('blog-post-container').innerHTML =
+          '<div style="text-align:center;padding:80px 0;"><h2>Article Not Found</h2><p style="color:var(--text);margin:16px 0 24px;">The article you are looking for does not exist.</p><a href="insights.html" class="btn btn-primary">View All Insights <i class="fas fa-arrow-right"></i></a></div>';
+        document.getElementById('breadcrumb-title').textContent = 'Not Found';
+        return;
+      }
 
-    var html = '<img src="' + post.image + '" alt="' + post.title + '" class="blog-hero-img fade-in" loading="lazy">' +
-      '<div class="blog-meta fade-in">' +
-        '<span><i class="far fa-calendar"></i> ' + post.date + '</span>' +
-        '<span><i class="far fa-user"></i> ' + post.author + '</span>' +
-        '<span class="blog-meta-tag">' + post.category + '</span>' +
-      '</div>' +
-      '<h1 style="font-size:32px;font-weight:600;margin-bottom:24px;line-height:1.3;" class="fade-in">' + post.title + '</h1>' +
-      '<div class="blog-content fade-in">' + contentHTML + '</div>' +
-      '<div class="blog-share fade-in">' +
-        '<span>Share:</span>' +
-        '<a href="https://www.facebook.com/sharer/sharer.php?u=' + shareUrl + '" target="_blank" style="background:#1877F2;"><i class="fab fa-facebook-f"></i></a>' +
-        '<a href="https://twitter.com/intent/tweet?url=' + shareUrl + '&text=' + shareTitle + '" target="_blank" style="background:#1DA1F2;"><i class="fab fa-twitter"></i></a>' +
-        '<a href="https://wa.me/?text=' + shareTitle + '%20' + shareUrl + '" target="_blank" style="background:#25D366;"><i class="fab fa-whatsapp"></i></a>' +
-        '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + shareUrl + '" target="_blank" style="background:#0A66C2;"><i class="fab fa-linkedin-in"></i></a>' +
-      '</div>' +
-      '<div class="blog-nav fade-in">' +
-        '<a href="insights.html"><i class="fas fa-arrow-left"></i> Back to All Insights</a>' +
-      '</div>';
+      document.title = post.title + ' | Queen Homes Realty';
+      document.getElementById('breadcrumb-title').textContent = post.title;
 
-    document.getElementById('blog-post-container').innerHTML = html;
+      var contentHTML = '';
+      var contentArr = post.content || [];
+      for (var i = 0; i < contentArr.length; i++) {
+        contentHTML += '<p>' + contentArr[i] + '</p>';
+      }
 
-    // Recent posts sidebar
-    var recentHTML = '';
-    var others = BLOG_POSTS.filter(function(p) { return p.id !== post.id; });
-    var recent = others.slice(0, 4);
-    for (var r = 0; r < recent.length; r++) {
-      var rp = recent[r];
-      recentHTML += '<a href="blog-post.html?id=' + rp.id + '" class="blog-sidebar-item">' +
-        '<img src="' + rp.image.replace('w=1200','w=200').replace('h=600','h=140') + '" alt="' + rp.title + '" loading="lazy">' +
-        '<div><h5>' + rp.title + '</h5><span>' + rp.date + '</span></div></a>';
-    }
-    document.getElementById('recent-posts').innerHTML = recentHTML;
+      var shareUrl = encodeURIComponent(window.location.href);
+      var shareTitle = encodeURIComponent(post.title);
 
-    // Trigger fade-in
-    document.querySelectorAll('.fade-in').forEach(function(el) {
-      if ('IntersectionObserver' in window) {
-        var obs = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
-        }, { threshold: 0.1 });
-        obs.observe(el);
-      } else { el.classList.add('visible'); }
-    });
-  })();
+      var html = '<img src="' + (post.image || '') + '" alt="' + post.title + '" class="blog-hero-img fade-in" loading="lazy">' +
+        '<div class="blog-meta fade-in">' +
+          '<span><i class="far fa-calendar"></i> ' + (post.date || '') + '</span>' +
+          '<span><i class="far fa-user"></i> ' + (post.author || 'Queen Homes Realty') + '</span>' +
+          '<span class="blog-meta-tag">' + (post.category || '') + '</span>' +
+        '</div>' +
+        '<h1 style="font-size:32px;font-weight:600;margin-bottom:24px;line-height:1.3;" class="fade-in">' + post.title + '</h1>' +
+        '<div class="blog-content fade-in">' + contentHTML + '</div>' +
+        '<div class="blog-share fade-in">' +
+          '<span>Share:</span>' +
+          '<a href="https://www.facebook.com/sharer/sharer.php?u=' + shareUrl + '" target="_blank" style="background:#1877F2;"><i class="fab fa-facebook-f"></i></a>' +
+          '<a href="https://twitter.com/intent/tweet?url=' + shareUrl + '&text=' + shareTitle + '" target="_blank" style="background:#1DA1F2;"><i class="fab fa-twitter"></i></a>' +
+          '<a href="https://wa.me/?text=' + shareTitle + '%20' + shareUrl + '" target="_blank" style="background:#25D366;"><i class="fab fa-whatsapp"></i></a>' +
+          '<a href="https://www.linkedin.com/sharing/share-offsite/?url=' + shareUrl + '" target="_blank" style="background:#0A66C2;"><i class="fab fa-linkedin-in"></i></a>' +
+        '</div>' +
+        '<div class="blog-nav fade-in">' +
+          '<a href="insights.html"><i class="fas fa-arrow-left"></i> Back to All Insights</a>' +
+        '</div>';
+
+      document.getElementById('blog-post-container').innerHTML = html;
+
+      // Recent posts sidebar
+      var recentHTML = '';
+      var others = allBlogs.filter(function(p) { return p.id !== post.id; });
+      var recent = others.slice(0, 4);
+      for (var r = 0; r < recent.length; r++) {
+        var rp = recent[r];
+        var rpImg = (rp.image || '').replace('w=1200','w=200').replace('h=600','h=140');
+        recentHTML += '<a href="blog-post.html?id=' + rp.id + '" class="blog-sidebar-item">' +
+          '<img src="' + rpImg + '" alt="' + rp.title + '" loading="lazy">' +
+          '<div><h5>' + rp.title + '</h5><span>' + (rp.date || '') + '</span></div></a>';
+      }
+      document.getElementById('recent-posts').innerHTML = recentHTML;
+
+      // Trigger fade-in
+      document.querySelectorAll('.fade-in').forEach(function(el) {
+        if ('IntersectionObserver' in window) {
+          var obs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
+          }, { threshold: 0.1 });
+          obs.observe(el);
+        } else { el.classList.add('visible'); }
+      });
+    })();
   </script>
   <script src="assets/js/main.js"></script>
 </body>
