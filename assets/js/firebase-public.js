@@ -8,12 +8,12 @@ import { getFirestore, collection, getDocs, getDoc, doc, addDoc, query, orderBy,
 
 // ─── PASTE THE SAME FIREBASE CONFIG FROM admin/js/firebase-config.js ───
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDEN-xrw4YGw7mmtwsiJB4j_TcezhQM8Pc",
+  authDomain: "real-estate-6da55.firebaseapp.com",
+  projectId: "real-estate-6da55",
+  storageBucket: "real-estate-6da55.firebasestorage.app",
+  messagingSenderId: "825451144867",
+  appId: "1:825451144867:web:82ce25da4f3bb4abac0116"
 };
 
 const app = initializeApp(firebaseConfig);
