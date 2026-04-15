@@ -1,0 +1,47 @@
+# Queen Homes Realty - Apache config
+
+# Default document
+DirectoryIndex index.html
+
+# Allow access to all files (overrides any server-level deny)
+<IfModule mod_authz_core.c>
+  Require all granted
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Allow from all
+</IfModule>
+
+# No directory listing
+Options -Indexes +FollowSymLinks
+
+# Disable ModSecurity for this directory (if server allows)
+<IfModule mod_security.c>
+  SecFilterEngine Off
+  SecFilterScanPOST Off
+</IfModule>
+
+<IfModule mod_security2.c>
+  SecRuleEngine Off
+</IfModule>
+
+# MIME types (ensure JS/CSS served correctly)
+<IfModule mod_mime.c>
+  AddType text/html .html
+  AddType text/css .css
+  AddType application/javascript .js
+  AddType image/svg+xml .svg
+  AddType application/font-woff .woff
+  AddType application/font-woff2 .woff2
+</IfModule>
+
+# Protect sensitive files
+<Files ".htaccess">
+  Require all denied
+</Files>
+<Files ".gitignore">
+  Require all denied
+</Files>
+<Files "SETUP.md">
+  Require all denied
+</Files>
