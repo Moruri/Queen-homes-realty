@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Requests — Queen Homes Admin</title>
+  <link rel="icon" type="image/png" href="../assets/images/logo.png?v=2">
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logo.png?v=2">
+  <link rel="apple-touch-icon" href="../assets/images/logo.png?v=2">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-icon">Q</div>
+        <h2><span>Queen</span> Homes<small>Admin Panel</small></h2>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-label">Main</div>
+        <a href="dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="properties.html"><i class="fas fa-building"></i> Properties</a>
+        <a href="blog.html"><i class="fas fa-newspaper"></i> Blog Posts</a>
+        <a href="inquiries.html"><i class="fas fa-envelope"></i> Inquiries</a>
+        <div class="sidebar-nav-label super-only">Access Control</div>
+        <a href="admin-requests.html" class="super-only active"><i class="fas fa-user-shield"></i> Admin Requests <span class="pending-badge" id="pending-badge" style="display:none;">0</span></a>
+        <div class="sidebar-nav-label">Settings</div>
+        <a href="settings.html"><i class="fas fa-cog"></i> Site Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="admin-header-left">
+          <button class="menu-toggle-admin"><i class="fas fa-bars"></i></button>
+          <h1>Admin Requests &amp; Users</h1>
+        </div>
+        <div class="admin-header-right">
+          <div class="admin-user">
+            <div class="admin-user-avatar">A</div>
+            <span>Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content" id="page-content">
+
+        <!-- Pending Requests -->
+        <div class="card">
+          <div class="card-header"><h3>Pending Requests</h3></div>
+          <div class="card-body" id="pending-list">
+            <p style="color:var(--gray-400);font-size:14px;">Loading requests...</p>
+          </div>
+        </div>
+
+        <!-- Current Admins -->
+        <div class="card">
+          <div class="card-header"><h3>Current Admins</h3></div>
+          <div class="card-body" id="admin-list">
+            <p style="color:var(--gray-400);font-size:14px;">Loading admins...</p>
+          </div>
+        </div>
+
+        <!-- History -->
+        <div class="card">
+          <div class="card-header"><h3>Reviewed Requests</h3></div>
+          <div class="card-body" id="history-list">
+            <p style="color:var(--gray-400);font-size:14px;">Loading history...</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="access-denied" style="display:none;padding:60px 20px;text-align:center;">
+        <i class="fas fa-lock" style="font-size:48px;color:var(--gray-500);margin-bottom:16px;"></i>
+        <h2 style="color:var(--white);">Super admin only</h2>
+        <p style="color:var(--gray-400);margin-top:8px;">This page is restricted to the super administrator.</p>
+        <a href="dashboard.html" class="btn btn-primary" style="margin-top:20px;"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { requireAuth, logout, SUPER_ADMIN_EMAIL } from './js/auth.js';
+    import {
+      db, collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc,
+      query, where, orderBy, serverTimestamp
+    } from './js/firebase-config.js';
+    import { initSidebar, setUserInitial, showToast, showConfirm, formatDate } from './js/ui-helpers.js';
+
+    // Wraps a promise with a timeout so hangs don't freeze the UI
+    function withTimeout(label, p, timeoutMs) {
+      timeoutMs = timeoutMs || 8000;
+      var timeout = new Promise(function(_, reject) {
+        setTimeout(function() { reject(new Error(label + ' timed out after ' + timeoutMs + 'ms. Likely a Firestore rules issue.')); }, timeoutMs);
+      });
+      return Promise.race([p, timeout]);
+    }
+
+    requireAuth(async function(user, role) {
+      console.log('[admin-requests] Authorized as:', user.email, '| role:', role);
+      initSidebar();
+      setUserInitial(user);
+      document.getElementById('logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        logout();
+      });
+
+      if (role !== 'super') {
+        document.getElementById('page-content').style.display = 'none';
+        document.getElementById('access-denied').style.display = 'block';
+        return;
+      }
+
+      // Super admin — render the three sections (failures in one won't kill the others)
+      renderAll();
+    });
+
+    async function renderAll() {
+      await Promise.all([renderPending(), renderAdmins(), renderHistory()]);
+    }
+
+    async function renderPending() {
+      var container = document.getElementById('pending-list');
+      var badge = document.getElementById('pending-badge');
+      try {
+        console.log('[admin-requests] Fetching pending requests...');
+        var q = query(collection(db, 'admin_requests'), where('status', '==', 'pending'));
+        var snap = await withTimeout('admin_requests query', getDocs(q));
+        console.log('[admin-requests] Pending requests found:', snap.size);
+        if (snap.empty) {
+          container.innerHTML = '<p style="color:var(--gray-400);font-size:14px;">No pending requests.</p>';
+          badge.style.display = 'none';
+          return;
+        }
+        badge.textContent = snap.size;
+        badge.style.display = 'inline-block';
+
+        var html = '';
+        snap.forEach(function(d) {
+          var r = d.data();
+          html +=
+            '<div class="card" style="background:var(--dark-3);margin-bottom:12px;">' +
+              '<div class="card-body">' +
+                '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">' +
+                  '<div style="flex:1;min-width:240px;">' +
+                    '<h4 style="color:var(--white);margin-bottom:4px;">' + escapeHtml(r.name || '') + '</h4>' +
+                    '<p style="font-size:13px;color:var(--gold);margin-bottom:8px;"><i class="fas fa-envelope"></i> ' + escapeHtml(r.email || '') + '</p>' +
+                    '<p style="font-size:14px;color:var(--gray-200);margin-bottom:8px;"><strong>Reason:</strong> ' + escapeHtml(r.reason || '—') + '</p>' +
+                    '<p style="font-size:12px;color:var(--gray-500);">Requested ' + formatDate(r.createdAt) + '</p>' +
+                  '</div>' +
+                  '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+                    '<button class="btn btn-primary approve-btn" data-id="' + d.id + '" data-email="' + escapeHtml(r.email) + '" data-name="' + escapeHtml(r.name) + '"><i class="fas fa-check"></i> Approve</button>' +
+                    '<button class="btn btn-danger reject-btn" data-id="' + d.id + '"><i class="fas fa-times"></i> Reject</button>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+        });
+        container.innerHTML = html;
+
+        container.querySelectorAll('.approve-btn').forEach(function(b) {
+          b.addEventListener('click', function() { approveRequest(this.dataset.id, this.dataset.email, this.dataset.name); });
+        });
+        container.querySelectorAll('.reject-btn').forEach(function(b) {
+          b.addEventListener('click', function() { rejectRequest(this.dataset.id); });
+        });
+      } catch (err) {
+        console.error('[admin-requests] Failed to load requests:', err);
+        var msg = err.code === 'permission-denied'
+          ? 'Permission denied by Firestore rules. Check rules in Firebase Console allow super admin to read <code>admin_requests</code>.'
+          : 'Failed to load requests: ' + (err.message || err.code || 'unknown error');
+        container.innerHTML = '<p style="color:#ef4444;font-size:13px;">' + msg + '</p>';
+      }
+    }
+
+    async function renderAdmins() {
+      var container = document.getElementById('admin-list');
+      try {
+        console.log('[admin-requests] Fetching admins list...');
+        var snap = await withTimeout('admins list', getDocs(collection(db, 'admins')));
+        console.log('[admin-requests] Admins found:', snap.size);
+        var html = '<div style="display:flex;flex-direction:column;gap:8px;">';
+        snap.forEach(function(d) {
+          var a = d.data();
+          var isSuper = a.role === 'super';
+          html +=
+            '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--dark-3);border-radius:8px;gap:12px;flex-wrap:wrap;">' +
+              '<div>' +
+                '<div style="color:var(--white);font-weight:500;">' + escapeHtml(a.name || a.email) +
+                  '<span class="role-badge ' + (isSuper ? 'super' : 'admin') + '">' + (isSuper ? 'Super Admin' : 'Admin') + '</span>' +
+                '</div>' +
+                '<div style="font-size:13px;color:var(--gray-400);"><i class="fas fa-envelope"></i> ' + escapeHtml(a.email || '') + '</div>' +
+              '</div>' +
+              (isSuper ? '' : '<button class="btn btn-danger revoke-btn" data-email="' + escapeHtml(a.email) + '"><i class="fas fa-user-slash"></i> Revoke</button>') +
+            '</div>';
+        });
+        html += '</div>';
+        container.innerHTML = html;
+
+        container.querySelectorAll('.revoke-btn').forEach(function(b) {
+          b.addEventListener('click', function() { revokeAdmin(this.dataset.email); });
+        });
+      } catch (err) {
+        console.error('[admin-requests] Failed to load admins:', err);
+        var msg = err.code === 'permission-denied'
+          ? 'Permission denied by Firestore rules. The <code>admins</code> collection needs read access for authenticated users.'
+          : 'Failed to load admins: ' + (err.message || err.code || 'unknown error');
+        container.innerHTML = '<p style="color:#ef4444;font-size:13px;">' + msg + '</p>';
+      }
+    }
+
+    async function renderHistory() {
+      var container = document.getElementById('history-list');
+      try {
+        var q = query(collection(db, 'admin_requests'), where('status', 'in', ['approved','rejected']));
+        var snap = await withTimeout('admin_requests query', getDocs(q));
+        if (snap.empty) {
+          container.innerHTML = '<p style="color:var(--gray-400);font-size:14px;">No reviewed requests yet.</p>';
+          return;
+        }
+        var rows = [];
+        snap.forEach(function(d) { rows.push(Object.assign({_id: d.id}, d.data())); });
+        rows.sort(function(a,b) {
+          var ta = (a.reviewedAt && a.reviewedAt.seconds) || 0;
+          var tb = (b.reviewedAt && b.reviewedAt.seconds) || 0;
+          return tb - ta;
+        });
+        var html = '<div style="display:flex;flex-direction:column;gap:6px;">';
+        rows.forEach(function(r) {
+          var color = r.status === 'approved' ? 'var(--gold)' : '#ef4444';
+          html +=
+            '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--dark-3);border-radius:6px;gap:12px;flex-wrap:wrap;">' +
+              '<div>' +
+                '<div style="color:var(--white);">' + escapeHtml(r.name || r.email) + '</div>' +
+                '<div style="font-size:12px;color:var(--gray-500);">' + escapeHtml(r.email) + ' • ' + formatDate(r.reviewedAt) + '</div>' +
+              '</div>' +
+              '<span style="color:' + color + ';font-size:12px;font-weight:600;text-transform:uppercase;">' + r.status + '</span>' +
+            '</div>';
+        });
+        html += '</div>';
+        container.innerHTML = html;
+      } catch (err) {
+        console.error('[admin-requests] Failed to load history:', err);
+        var msg = err.code === 'permission-denied'
+          ? 'Permission denied by Firestore rules.'
+          : 'Failed to load history: ' + (err.message || err.code || 'unknown error');
+        container.innerHTML = '<p style="color:#ef4444;font-size:13px;">' + msg + '</p>';
+      }
+    }
+
+    async function approveRequest(id, email, name) {
+      var ok = await showConfirm('Approve admin access?', email + ' will be able to sign in immediately using the password they set when they signed up.');
+      if (!ok) return;
+      try {
+        var emailLower = (email || '').toLowerCase();
+
+        // Add to admins allowlist — user's Firebase Auth account was already created at signup time
+        await setDoc(doc(db, 'admins', emailLower), {
+          email: emailLower,
+          name: name || '',
+          role: 'admin',
+          status: 'active',
+          approvedAt: serverTimestamp(),
+          approvedBy: SUPER_ADMIN_EMAIL
+        });
+
+        // Update request record
+        await updateDoc(doc(db, 'admin_requests', id), {
+          status: 'approved',
+          reviewedAt: serverTimestamp(),
+          reviewedBy: SUPER_ADMIN_EMAIL
+        });
+
+        showToast(name + ' approved. They can sign in with their chosen password.', 'success');
+        await renderAll();
+      } catch (err) {
+        console.error(err);
+        showToast('Failed to approve request', 'error');
+      }
+    }
+
+    async function rejectRequest(id) {
+      var ok = await showConfirm('Reject request?', 'This user will not be able to sign up unless you approve a future request.');
+      if (!ok) return;
+      try {
+        await updateDoc(doc(db, 'admin_requests', id), {
+          status: 'rejected',
+          reviewedAt: serverTimestamp(),
+          reviewedBy: SUPER_ADMIN_EMAIL
+        });
+        showToast('Request rejected', 'info');
+        await renderAll();
+      } catch (err) {
+        console.error(err);
+        showToast('Failed to reject request', 'error');
+      }
+    }
+
+    async function revokeAdmin(email) {
+      var ok = await showConfirm('Revoke admin access?', email + ' will lose dashboard access on their next login. This does NOT delete their Firebase Auth account — delete that in the Firebase Console if needed.');
+      if (!ok) return;
+      try {
+        await deleteDoc(doc(db, 'admins', email.toLowerCase()));
+        showToast('Access revoked', 'success');
+        await renderAll();
+      } catch (err) {
+        console.error(err);
+        showToast('Failed to revoke access', 'error');
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+  </script>
+
+</body>
+</html>

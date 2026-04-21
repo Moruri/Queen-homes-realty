@@ -115,3 +115,21 @@ export function truncate(str, len) {
   if (!str) return '';
   return str.length > len ? str.substring(0, len) + '...' : str;
 }
+
+// ── Populate the "Admin Requests" pending badge on the sidebar (super admins only) ──
+export async function updatePendingRequestsBadge(role) {
+  if (role !== 'super') return;
+  var badge = document.getElementById('sidebar-pending-badge');
+  if (!badge) return;
+  try {
+    var mod = await import('./firebase-config.js');
+    var q = mod.query(mod.collection(mod.db, 'admin_requests'), mod.where('status', '==', 'pending'));
+    var snap = await mod.getDocs(q);
+    if (snap.size > 0) {
+      badge.textContent = snap.size;
+      badge.style.display = 'inline-block';
+    } else {
+      badge.style.display = 'none';
+    }
+  } catch (err) { /* silent */ }
+}

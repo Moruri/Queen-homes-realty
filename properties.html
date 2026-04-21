@@ -5,7 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Properties — Queen Homes Realty | Apartments, Villas & More</title>
   <meta name="description" content="Browse premium properties for sale and rent in Nairobi — apartments, villas, townhouses, penthouses. Find your ideal home with Queen Homes Realty.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="icon" type="image/png" href="assets/images/logo.png?v=2">
+  <link rel="shortcut icon" type="image/png" href="assets/images/logo.png?v=2">
+  <link rel="apple-touch-icon" href="assets/images/logo.png?v=2">
+  <meta property="og:image" content="https://queenhomesrealty.com/assets/images/logo.png">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="1024">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://queenhomesrealty.com/assets/images/logo.png">
+  <meta name="twitter:title" content="Queen Homes Realty">
+  <meta name="twitter:description" content="Premium real estate in Nairobi, Kenya.">
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -74,7 +83,7 @@
         <div>
           <div class="filter-bar">
             <div class="filter-bar-left">
-              <span>Showing <strong id="results-count">9</strong> Properties</span>
+              <span>Showing <strong id="results-count">0</strong> Properties</span>
             </div>
             <div style="display: flex; gap: 12px; align-items: center;">
               <div class="filter-sort">
@@ -92,315 +101,7 @@
           </div>
 
           <div class="property-grid" id="property-grid">
-            <!-- Properties loaded dynamically from Firebase -->
-            <div class="property-card fade-in" data-type="apartment" data-location="kilimani" data-status="sale" data-price="7000000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop" alt="Amethyst Apartments" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 7,000,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=amethyst-kilimani">Amethyst — Luxury Apartments, Kilimani</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Kilimani, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 3 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,400 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="apartment" data-location="ruaka" data-status="sale" data-price="7300000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop" alt="Capital Garden" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 7,300,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=capital-garden-ruiru">Capital Garden — Luxury Apartments</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Ruiru, Kiambu</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 3 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,100 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="villa" data-location="karen" data-status="sale" data-price="35000000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&h=400&fit=crop" alt="Karen Villa" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span><span class="badge badge-featured">Featured</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 35,000,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=karen-villa">Exclusive Karen Villa with Pool</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Karen, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 5 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 4 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 4,500 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="apartment" data-location="westlands" data-status="sale" data-price="5000000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop" alt="Westlands Apartment" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 5,000,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=westlands-2br">Modern 2BR Apartment, Westlands</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Westlands, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 2 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 950 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="townhouse" data-location="ruaka" data-status="sale" data-price="8400000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop" alt="Lesonia Townhouse" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 8,400,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=lesonia-mlolongo">Lesonia — Premium Townhouse</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Mlolongo, Machakos</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 4 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 3 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 2,800 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="apartment" data-location="kileleshwa" data-status="rent" data-price="85000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=400&fit=crop" alt="Kileleshwa Apartment" loading="lazy">
-                <div class="property-badge"><span class="badge badge-rent">For Rent</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 85,000 <small>/month</small></div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=kileleshwa-2br-rent">Modern 2BR Apartment, Kileleshwa</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Kileleshwa, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 2 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,100 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="penthouse" data-location="westlands" data-status="sale" data-price="22000000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&h=400&fit=crop" alt="Skyline Penthouse" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span><span class="badge badge-featured">Featured</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 22,000,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=skyline-penthouse-westlands">Skyline Penthouse, Westlands</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Westlands, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 4 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 3 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 3,200 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="apartment" data-location="lavington" data-status="rent" data-price="120000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop" alt="Lavington Apartment" loading="lazy">
-                <div class="property-badge"><span class="badge badge-rent">For Rent</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 120,000 <small>/month</small></div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=lavington-3br-rent">Spacious 3BR, Lavington</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Lavington, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 3 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,600 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="maisonette" data-location="ruaka" data-status="sale" data-price="18500000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&h=400&fit=crop" alt="Ruaka Maisonette" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 18,500,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=ruaka-maisonette">Elegant 4BR Maisonette, Ruaka</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Ruaka, Kiambu</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 4 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 3 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 2,400 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Page 2 Properties -->
-            <div class="property-card fade-in" data-type="apartment" data-location="kilimani" data-status="sale" data-price="12000000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop" alt="Kilimani Penthouse" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span><span class="badge badge-featured">Featured</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 12,000,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=brookside-kilimani">Brookside Heights — Kilimani</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Kilimani, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 3 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 3 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,800 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="villa" data-location="karen" data-status="sale" data-price="45000000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&h=400&fit=crop" alt="Karen Garden Villa" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 45,000,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=karen-garden-villa">Karen Garden Estate Villa</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Karen, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 6 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 5 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 5,200 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="apartment" data-location="westlands" data-status="rent" data-price="95000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=600&h=400&fit=crop" alt="Westlands Studio" loading="lazy">
-                <div class="property-badge"><span class="badge badge-rent">For Rent</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 95,000 <small>/month</small></div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=parklands-view">Parklands View Apartment</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Westlands, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 2 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 1 Bath</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 850 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="townhouse" data-location="lavington" data-status="sale" data-price="28000000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=400&fit=crop" alt="Lavington Townhouse" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 28,000,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=lavington-townhouse">Lavington Green Townhouse</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Lavington, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 4 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 4 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 3,100 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="apartment" data-location="kileleshwa" data-status="sale" data-price="9500000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=600&h=400&fit=crop" alt="Kileleshwa Apartment" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 9,500,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=riverside-kileleshwa">Riverside 3BR — Kileleshwa</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Kileleshwa, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 3 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 2 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 1,350 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Page 3 Properties -->
-            <div class="property-card fade-in" data-type="penthouse" data-location="kilimani" data-status="sale" data-price="32000000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=600&h=400&fit=crop" alt="Kilimani Penthouse" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span><span class="badge badge-featured">Featured</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 32,000,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=monarch-penthouse-kilimani">Monarch Penthouse — Kilimani</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Kilimani, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 4 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 4 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 3,500 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="apartment" data-location="ruaka" data-status="rent" data-price="55000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&h=400&fit=crop" alt="Ruaka Studio" loading="lazy">
-                <div class="property-badge"><span class="badge badge-rent">For Rent</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 55,000 <small>/month</small></div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=ruaka-studio-rent">Cozy 1BR Studio — Ruaka</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Ruaka, Kiambu</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 1 Bed</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 1 Bath</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 550 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="property-card fade-in" data-type="villa" data-location="lavington" data-status="sale" data-price="55000000">
-              <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop" alt="Lavington Mansion" loading="lazy">
-                <div class="property-badge"><span class="badge badge-sale">For Sale</span></div>
-                <button class="property-favorite"><i class="far fa-heart"></i></button>
-                <div class="property-price">KES 55,000,000</div>
-              </div>
-              <div class="property-info">
-                <h3><a href="property-detail.html?id=grand-lavington-mansion">Grand Lavington Mansion</a></h3>
-                <div class="property-location"><i class="fas fa-map-marker-alt"></i> Lavington, Nairobi</div>
-                <div class="property-details">
-                  <div class="property-detail"><i class="fas fa-bed"></i> 6 Beds</div>
-                  <div class="property-detail"><i class="fas fa-bath"></i> 5 Baths</div>
-                  <div class="property-detail"><i class="fas fa-ruler-combined"></i> 6,000 ft&sup2;</div>
-                </div>
-              </div>
-            </div>
-
+            <!-- Properties loaded dynamically from Firebase admin dashboard -->
           </div>
 
           <div class="pagination" id="pagination"></div>
@@ -479,11 +180,43 @@
     import { fetchProperties } from './assets/js/firebase-public.js';
 
     (async function() {
+      var grid = document.getElementById('property-grid');
+      var countEl = document.getElementById('results-count');
+
+      function showEmptyState() {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray-400);"><i class="fas fa-home" style="font-size:48px;margin-bottom:16px;opacity:0.4;"></i><h3 style="margin-bottom:8px;">No properties available yet</h3><p>Check back soon — new listings are added regularly.</p></div>';
+        if (countEl) countEl.textContent = '0';
+      }
+
+      // Rebuilds a filter dropdown from the distinct values found in properties.
+      // Keeps the first "All" option, then adds one <option> per unique value.
+      function populateFilterDropdown(selectId, props, extract) {
+        var sel = document.getElementById(selectId);
+        if (!sel) return;
+        var seen = {};
+        var values = [];
+        props.forEach(function(p) {
+          var v = (extract(p) || '').trim();
+          if (!v) return;
+          var key = v.toLowerCase();
+          if (!seen[key]) { seen[key] = true; values.push(v); }
+        });
+        values.sort(function(a,b) { return a.localeCompare(b); });
+        var firstOpt = sel.querySelector('option'); // keep the "All" option
+        sel.innerHTML = '';
+        if (firstOpt) sel.appendChild(firstOpt);
+        values.forEach(function(v) {
+          var o = document.createElement('option');
+          o.value = v.toLowerCase();
+          o.textContent = v;
+          sel.appendChild(o);
+        });
+      }
+
       try {
         var properties = await fetchProperties();
-        if (!properties || properties.length === 0) return; // keep static HTML
+        if (!properties || properties.length === 0) { showEmptyState(); return; }
 
-        var grid = document.getElementById('property-grid');
         var html = '';
 
         properties.forEach(function(p) {
@@ -517,7 +250,15 @@
         });
 
         grid.innerHTML = html;
-        document.getElementById('results-count').textContent = properties.length;
+        if (countEl) countEl.textContent = properties.length;
+
+        // Populate filter dropdowns dynamically from actual property data
+        populateFilterDropdown('filter-location', properties, function(p) {
+          return (p.location || '').split(',')[0].trim();
+        });
+        populateFilterDropdown('filter-type', properties, function(p) {
+          return p.type || '';
+        });
 
         // Re-init pagination and filters from main.js
         if (window.initPropertyPagination) window.initPropertyPagination();
@@ -533,7 +274,8 @@
         });
 
       } catch (err) {
-        console.log('Firebase not available, using static properties:', err.message);
+        console.log('Firebase properties not available:', err.message);
+        showEmptyState();
       }
     })();
   </script>

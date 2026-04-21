@@ -119,8 +119,14 @@ document.addEventListener('DOMContentLoaded', function () {
   if (propGrid && paginationEl) {
     var PER_PAGE = 6;
     var currentPage = 1;
-    var allCards = Array.from(propGrid.querySelectorAll('.property-card'));
-    var filteredCards = allCards.slice();
+    var allCards = [];
+    var filteredCards = [];
+    var controlsBound = false;
+
+    function refreshCards() {
+      allCards = Array.from(propGrid.querySelectorAll('.property-card'));
+      filteredCards = allCards.slice();
+    }
 
     function showPage(page) {
       currentPage = page;
@@ -134,8 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resultsCount) resultsCount.textContent = filteredCards.length;
 
       renderPagination();
-      // Scroll to top of grid
-      propGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function renderPagination() {
@@ -144,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (totalPages <= 1) return;
 
-      // Previous button
       if (currentPage > 1) {
         var prev = document.createElement('a');
         prev.href = '#';
@@ -153,7 +156,6 @@ document.addEventListener('DOMContentLoaded', function () {
         paginationEl.appendChild(prev);
       }
 
-      // Page numbers
       for (var i = 1; i <= totalPages; i++) {
         (function (pg) {
           if (pg === currentPage) {
@@ -171,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })(i);
       }
 
-      // Next button
       if (currentPage < totalPages) {
         var next = document.createElement('a');
         next.href = '#';
@@ -182,46 +183,62 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function applyAllFilters() {
-      var type = document.getElementById('filter-type').value;
-      var location = document.getElementById('filter-location').value;
-      var status = document.getElementById('filter-status').value;
-      var sortVal = document.getElementById('sort-select') ? document.getElementById('sort-select').value : 'newest';
+      var typeEl = document.getElementById('filter-type');
+      var locEl = document.getElementById('filter-location');
+      var statusEl = document.getElementById('filter-status');
+      var sortEl = document.getElementById('sort-select');
 
-      // Filter
+      var type = typeEl ? typeEl.value : '';
+      var location = locEl ? locEl.value : '';
+      var status = statusEl ? statusEl.value : '';
+      var sortVal = sortEl ? sortEl.value : 'newest';
+
       filteredCards = allCards.filter(function (card) {
         if (type && card.getAttribute('data-type') !== type) return false;
-        if (location && card.getAttribute('data-location') !== location) return false;
+        if (location) {
+          var cardLoc = (card.getAttribute('data-location') || '').toLowerCase();
+          if (cardLoc.indexOf(location.toLowerCase()) === -1) return false;
+        }
         if (status && card.getAttribute('data-status') !== status) return false;
         return true;
       });
 
-      // Sort
       if (sortVal === 'price-low') {
         filteredCards.sort(function (a, b) { return (parseInt(a.getAttribute('data-price')) || 0) - (parseInt(b.getAttribute('data-price')) || 0); });
       } else if (sortVal === 'price-high') {
         filteredCards.sort(function (a, b) { return (parseInt(b.getAttribute('data-price')) || 0) - (parseInt(a.getAttribute('data-price')) || 0); });
       }
 
-      // Re-order in DOM
       filteredCards.forEach(function (card) { propGrid.appendChild(card); });
 
       showPage(1);
     }
 
-    // Bind filter button
-    var applyBtn = document.getElementById('apply-filters');
-    if (applyBtn) {
-      applyBtn.addEventListener('click', applyAllFilters);
+    function bindControlsOnce() {
+      if (controlsBound) return;
+      controlsBound = true;
+      var applyBtn = document.getElementById('apply-filters');
+      if (applyBtn) applyBtn.addEventListener('click', function (e) { e.preventDefault(); applyAllFilters(); });
+      var sortSelect = document.getElementById('sort-select');
+      if (sortSelect) sortSelect.addEventListener('change', applyAllFilters);
+      // Also filter live when any dropdown changes (no need to hit Apply every time)
+      ['filter-type','filter-location','filter-status'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('change', applyAllFilters);
+      });
     }
 
-    // Bind sort
-    var sortSelect = document.getElementById('sort-select');
-    if (sortSelect) {
-      sortSelect.addEventListener('change', applyAllFilters);
-    }
+    // Expose a reinit hook for pages that load properties dynamically (Firebase)
+    window.initPropertyPagination = function () {
+      refreshCards();
+      bindControlsOnce();
+      showPage(1);
+    };
 
-    // Initial render
-    showPage(1);
+    // Initial render (for static content); no-op if grid is empty — Firebase loader will call us back
+    refreshCards();
+    bindControlsOnce();
+    if (allCards.length) showPage(1);
   }
 
   // ─── View Toggle (Grid/List) ───

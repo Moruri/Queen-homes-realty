@@ -4,9 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Property — Queen Homes Admin</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+  <link rel="icon" type="image/png" href="../assets/images/logo.png?v=2">
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logo.png?v=2">
+  <link rel="apple-touch-icon" href="../assets/images/logo.png?v=2">
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css">
+  <style>
+    /* Quill editor — dark theme to match admin panel */
+    .ql-toolbar.ql-snow { background: var(--dark-3); border: 1px solid var(--dark-4); border-radius: 8px 8px 0 0; }
+    .ql-container.ql-snow { background: var(--dark-2); border: 1px solid var(--dark-4); border-top: 0; border-radius: 0 0 8px 8px; min-height: 220px; font-size: 15px; }
+    .ql-editor { color: var(--gray-200); min-height: 220px; }
+    .ql-editor.ql-blank::before { color: var(--gray-500); font-style: normal; }
+    .ql-snow .ql-stroke { stroke: var(--gray-300); }
+    .ql-snow .ql-fill { fill: var(--gray-300); }
+    .ql-snow .ql-picker { color: var(--gray-300); }
+    .ql-snow .ql-picker-options { background: var(--dark-3); border-color: var(--dark-4); }
+    .ql-snow.ql-toolbar button:hover .ql-stroke,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+    .ql-snow .ql-picker-label:hover,
+    .ql-snow .ql-picker-label.ql-active { stroke: var(--gold); color: var(--gold); }
+    .ql-snow.ql-toolbar button:hover .ql-fill,
+    .ql-snow.ql-toolbar button.ql-active .ql-fill { fill: var(--gold); }
+    .ql-editor h2 { font-size: 22px; font-weight: 700; color: var(--white); margin: 12px 0 8px; }
+    .ql-editor h3 { font-size: 18px; font-weight: 600; color: var(--white); margin: 10px 0 6px; }
+    .ql-editor a { color: var(--gold); }
+    .ql-snow a { color: var(--gold); }
+    .ql-tooltip.ql-editing input[type=text] { background: var(--dark-3); color: var(--gray-200); border-color: var(--dark-4); }
+    .ql-tooltip { background: var(--dark-3); color: var(--gray-200); border-color: var(--dark-4); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+  </style>
 </head>
 <body>
 
@@ -14,7 +40,7 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-brand">
-        <div class="logo-icon">👑</div>
+        <div class="logo-icon">Q</div>
         <h2><span>Queen</span> Homes<small>Admin Panel</small></h2>
       </div>
       <nav class="sidebar-nav">
@@ -23,6 +49,8 @@
         <a href="properties.html" class="active"><i class="fas fa-building"></i> Properties</a>
         <a href="blog.html"><i class="fas fa-newspaper"></i> Blog Posts</a>
         <a href="inquiries.html"><i class="fas fa-envelope"></i> Inquiries</a>
+        <div class="sidebar-nav-label super-only">Access Control</div>
+        <a href="admin-requests.html" class="super-only"><i class="fas fa-user-shield"></i> Admin Requests <span class="pending-badge" id="sidebar-pending-badge" style="display:none;">0</span></a>
         <div class="sidebar-nav-label">Settings</div>
         <a href="settings.html"><i class="fas fa-cog"></i> Site Settings</a>
       </nav>
@@ -110,8 +138,31 @@
             <div class="card-header"><h3>Description</h3></div>
             <div class="card-body">
               <div class="form-group">
-                <label for="description">Full Description</label>
-                <textarea id="description" class="form-control" rows="6" placeholder="Describe the property in detail..."></textarea>
+                <label>Full Description</label>
+                <div id="description-toolbar">
+                  <span class="ql-formats">
+                    <select class="ql-header">
+                      <option value="2">Heading</option>
+                      <option value="3">Subheading</option>
+                      <option selected>Normal</option>
+                    </select>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-bold" title="Bold"></button>
+                    <button class="ql-italic" title="Italic"></button>
+                    <button class="ql-underline" title="Underline"></button>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-list" value="ordered" title="Numbered list"></button>
+                    <button class="ql-list" value="bullet" title="Bulleted list"></button>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-link" title="Add link"></button>
+                    <button class="ql-clean" title="Remove formatting"></button>
+                  </span>
+                </div>
+                <div id="description-editor"></div>
+                <p class="form-hint" style="margin-top:8px;">Paste links directly — they'll become clickable on the site. Use the <strong>Heading</strong> / <strong>Subheading</strong> dropdown to make section titles stand out.</p>
               </div>
             </div>
           </div>
@@ -176,6 +227,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.min.js"></script>
   <script type="module">
     import { requireAuth, logout } from './js/auth.js';
     import { db, storage, collection, doc, getDoc, addDoc, updateDoc, serverTimestamp, ref, uploadBytes, getDownloadURL } from './js/firebase-config.js';
@@ -183,6 +235,13 @@
 
     var editId = new URLSearchParams(window.location.search).get('id');
     var uploadedImageUrls = [];
+
+    // Rich text editor for description
+    var quill = new Quill('#description-editor', {
+      theme: 'snow',
+      placeholder: 'Describe the property in detail. Use the Heading dropdown for section titles. Paste URLs — they become clickable on the site.',
+      modules: { toolbar: '#description-toolbar' }
+    });
 
     requireAuth(async function(user) {
       initSidebar();
@@ -210,7 +269,15 @@
             document.getElementById('beds').value = d.beds || '';
             document.getElementById('baths').value = d.baths || '';
             document.getElementById('parking').value = d.parking || '';
-            document.getElementById('description').value = d.description || '';
+            // Populate Quill editor (supports both legacy plain text and new HTML)
+            var existingDesc = d.description || '';
+            if (existingDesc && !/<\w+[^>]*>/.test(existingDesc)) {
+              // Legacy plain text — wrap each \n\n paragraph in <p>
+              existingDesc = existingDesc.split(/\n\n+/)
+                .map(function(p) { return '<p>' + p.replace(/\n/g, '<br>') + '</p>'; })
+                .join('');
+            }
+            quill.root.innerHTML = existingDesc;
             document.getElementById('image').value = d.image || '';
             document.getElementById('gallery').value = (d.gallery || []).join('\n');
 
@@ -295,7 +362,7 @@
           beds: parseInt(document.getElementById('beds').value) || 0,
           baths: parseInt(document.getElementById('baths').value) || 0,
           parking: parseInt(document.getElementById('parking').value) || 0,
-          description: document.getElementById('description').value.trim(),
+          description: (quill.getText().trim() === '') ? '' : quill.root.innerHTML,
           image: document.getElementById('image').value.trim() || (galleryUrls.length ? galleryUrls[0] : ''),
           gallery: galleryUrls,
           amenities: amenities,
