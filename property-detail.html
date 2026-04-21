@@ -236,11 +236,56 @@
     // Build description — supports rich HTML (from Quill editor) or plain text (legacy)
     var descHTML = renderDescription(prop.description || '');
 
+    // Walks HTML, finds bare URLs in text nodes, wraps them in <a> tags.
+    // Skips content already inside <a> so we don't double-wrap existing links.
+    function linkifyHTMLTextNodes(html) {
+      var container = document.createElement('div');
+      container.innerHTML = html;
+      var urlRe = /(https?:\/\/[^\s<>"')\]]+[^\s<>"')\].,;:!?])/g;
+
+      function walk(node) {
+        if (node.nodeType === 3) { // text node
+          var text = node.nodeValue;
+          if (!text || text.indexOf('http') === -1) return;
+          urlRe.lastIndex = 0;
+          if (!urlRe.test(text)) return;
+          urlRe.lastIndex = 0;
+
+          var frag = document.createDocumentFragment();
+          var lastIndex = 0;
+          var match;
+          while ((match = urlRe.exec(text)) !== null) {
+            if (match.index > lastIndex) {
+              frag.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+            }
+            var a = document.createElement('a');
+            a.href = match[0];
+            a.textContent = match[0];
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            frag.appendChild(a);
+            lastIndex = urlRe.lastIndex;
+          }
+          if (lastIndex < text.length) {
+            frag.appendChild(document.createTextNode(text.slice(lastIndex)));
+          }
+          node.parentNode.replaceChild(frag, node);
+        } else if (node.nodeType === 1 && node.tagName !== 'A') {
+          // Element — recurse unless it's already an anchor
+          var children = Array.prototype.slice.call(node.childNodes);
+          children.forEach(walk);
+        }
+      }
+
+      walk(container);
+      return container.innerHTML;
+    }
+
     function renderDescription(desc) {
       if (!desc) return '';
-      // Already HTML from rich editor — render as-is, URLs inside <a> tags preserved
+      // HTML from rich editor — linkify bare URLs in text nodes, preserve existing <a> tags
       if (/<\w+[^>]*>/.test(desc)) {
-        return '<div class="rich-description">' + desc + '</div>';
+        return '<div class="rich-description">' + linkifyHTMLTextNodes(desc) + '</div>';
       }
       // Plain text — escape HTML, auto-linkify URLs, paragraph-ize
       var escaped = desc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
