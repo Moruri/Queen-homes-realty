@@ -66,6 +66,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // ─── Hero Search: pass selected filters to properties.html as URL params ───
+  var heroSearchBtn = document.getElementById('hero-search-btn');
+  if (heroSearchBtn) {
+    heroSearchBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var locEl   = document.getElementById('search-location');
+      var typeEl  = document.getElementById('search-type');
+      var priceEl = document.getElementById('search-price');
+      var statusEl = document.getElementById('search-status');
+
+      var params = new URLSearchParams();
+      if (locEl && locEl.value)     params.set('location', locEl.value);
+      if (typeEl && typeEl.value)   params.set('type', typeEl.value);
+      if (priceEl && priceEl.value) params.set('price', priceEl.value);
+      if (statusEl && statusEl.value) params.set('status', statusEl.value);
+
+      var qs = params.toString();
+      window.location.href = 'properties.html' + (qs ? '?' + qs : '');
+    });
+  }
+
   // ─── Scroll Fade-In Animations ───
   const fadeEls = document.querySelectorAll('.fade-in');
 
@@ -193,6 +214,19 @@ document.addEventListener('DOMContentLoaded', function () {
       var status = statusEl ? statusEl.value : '';
       var sortVal = sortEl ? sortEl.value : 'newest';
 
+      // Price range may come via URL param (from hero search bar)
+      var priceRange = new URLSearchParams(window.location.search).get('price');
+      var priceMin = 0, priceMax = Infinity;
+      if (priceRange) {
+        if (priceRange.indexOf('+') > -1) {
+          priceMin = parseInt(priceRange) || 0;
+        } else {
+          var parts = priceRange.split('-');
+          priceMin = parseInt(parts[0]) || 0;
+          priceMax = parseInt(parts[1]) || Infinity;
+        }
+      }
+
       filteredCards = allCards.filter(function (card) {
         if (type && card.getAttribute('data-type') !== type) return false;
         if (location) {
@@ -200,6 +234,10 @@ document.addEventListener('DOMContentLoaded', function () {
           if (cardLoc.indexOf(location.toLowerCase()) === -1) return false;
         }
         if (status && card.getAttribute('data-status') !== status) return false;
+        if (priceRange) {
+          var p = parseInt(card.getAttribute('data-price')) || 0;
+          if (p < priceMin || p > priceMax) return false;
+        }
         return true;
       });
 

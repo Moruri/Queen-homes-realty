@@ -79,8 +79,28 @@
     <div class="container">
       <div class="properties-layout">
 
+        <!-- Filter sidebar (appears TOP on mobile, right-column-top on desktop) -->
+        <aside class="filter-aside">
+          <div class="sidebar-widget">
+            <h4>Filter Properties</h4>
+            <div class="form-group">
+              <label>Property Type</label>
+              <select id="filter-type"><option value="">All Types</option><option value="apartment">Apartment</option><option value="villa">Villa</option><option value="townhouse">Townhouse</option><option value="penthouse">Penthouse</option><option value="maisonette">Maisonette</option></select>
+            </div>
+            <div class="form-group">
+              <label>Location</label>
+              <select id="filter-location"><option value="">All Locations</option><option value="kilimani">Kilimani</option><option value="karen">Karen</option><option value="lavington">Lavington</option><option value="westlands">Westlands</option><option value="ruaka">Ruaka</option><option value="kileleshwa">Kileleshwa</option></select>
+            </div>
+            <div class="form-group">
+              <label>Status</label>
+              <select id="filter-status"><option value="">All</option><option value="sale">For Sale</option><option value="rent">For Rent</option></select>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 8px;" id="apply-filters"><i class="fas fa-search"></i> Apply Filters</button>
+          </div>
+        </aside>
+
         <!-- Main Content -->
-        <div>
+        <div class="properties-main">
           <div class="filter-bar">
             <div class="filter-bar-left">
               <span>Showing <strong id="results-count">0</strong> Properties</span>
@@ -107,25 +127,8 @@
           <div class="pagination" id="pagination"></div>
         </div>
 
-        <!-- Sidebar -->
-        <aside>
-          <div class="sidebar-widget">
-            <h4>Filter Properties</h4>
-            <div class="form-group">
-              <label>Property Type</label>
-              <select id="filter-type"><option value="">All Types</option><option value="apartment">Apartment</option><option value="villa">Villa</option><option value="townhouse">Townhouse</option><option value="penthouse">Penthouse</option><option value="maisonette">Maisonette</option></select>
-            </div>
-            <div class="form-group">
-              <label>Location</label>
-              <select id="filter-location"><option value="">All Locations</option><option value="kilimani">Kilimani</option><option value="karen">Karen</option><option value="lavington">Lavington</option><option value="westlands">Westlands</option><option value="ruaka">Ruaka</option><option value="kileleshwa">Kileleshwa</option></select>
-            </div>
-            <div class="form-group">
-              <label>Status</label>
-              <select id="filter-status"><option value="">All</option><option value="sale">For Sale</option><option value="rent">For Rent</option></select>
-            </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 8px;" id="apply-filters"><i class="fas fa-search"></i> Apply Filters</button>
-          </div>
-
+        <!-- Secondary sidebar (appears BOTTOM on mobile, right-column-bottom on desktop) -->
+        <aside class="secondary-aside">
           <div class="sidebar-widget">
             <h4>Mortgage Calculator</h4>
             <div class="form-group"><label>Property Price (KES)</label><input type="number" id="mort-price" value="10000000"></div>
@@ -188,24 +191,33 @@
         if (countEl) countEl.textContent = '0';
       }
 
-      // Rebuilds a filter dropdown from the distinct values found in properties.
-      // Keeps the first "All" option, then adds one <option> per unique value.
+      // Merges values from actual properties into the existing dropdown.
+      // Keeps hardcoded defaults (Apartment/Villa/Townhouse/etc.), adds any custom values found.
       function populateFilterDropdown(selectId, props, extract) {
         var sel = document.getElementById(selectId);
         if (!sel) return;
+
+        // Track existing option values (case-insensitive) so we don't duplicate them
+        var existing = {};
+        Array.prototype.forEach.call(sel.options, function(opt) {
+          if (opt.value) existing[opt.value.toLowerCase()] = true;
+        });
+
+        // Collect new distinct values from properties
+        var newValues = [];
         var seen = {};
-        var values = [];
         props.forEach(function(p) {
           var v = (extract(p) || '').trim();
           if (!v) return;
           var key = v.toLowerCase();
-          if (!seen[key]) { seen[key] = true; values.push(v); }
+          if (existing[key] || seen[key]) return;
+          seen[key] = true;
+          newValues.push(v);
         });
-        values.sort(function(a,b) { return a.localeCompare(b); });
-        var firstOpt = sel.querySelector('option'); // keep the "All" option
-        sel.innerHTML = '';
-        if (firstOpt) sel.appendChild(firstOpt);
-        values.forEach(function(v) {
+
+        // Append new values, sorted
+        newValues.sort(function(a,b) { return a.localeCompare(b); });
+        newValues.forEach(function(v) {
           var o = document.createElement('option');
           o.value = v.toLowerCase();
           o.textContent = v;
@@ -260,8 +272,19 @@
           return p.type || '';
         });
 
+        // Preselect filter dropdowns from URL params (coming from the hero search bar)
+        var params = new URLSearchParams(window.location.search);
+        preselectFilter('filter-location', params.get('location'));
+        preselectFilter('filter-type', params.get('type'));
+        preselectFilter('filter-status', params.get('status'));
+
         // Re-init pagination and filters from main.js
         if (window.initPropertyPagination) window.initPropertyPagination();
+
+        // If URL had filter params, apply them now so users land on filtered results
+        if (params.toString() && document.getElementById('apply-filters')) {
+          document.getElementById('apply-filters').click();
+        }
 
         // Re-trigger fade-in
         grid.querySelectorAll('.fade-in').forEach(function(el) {
@@ -276,6 +299,19 @@
       } catch (err) {
         console.log('Firebase properties not available:', err.message);
         showEmptyState();
+      }
+
+      function preselectFilter(selectId, value) {
+        if (!value) return;
+        var sel = document.getElementById(selectId);
+        if (!sel) return;
+        var v = value.toLowerCase();
+        for (var i = 0; i < sel.options.length; i++) {
+          if ((sel.options[i].value || '').toLowerCase() === v) {
+            sel.selectedIndex = i;
+            return;
+          }
+        }
       }
     })();
   </script>

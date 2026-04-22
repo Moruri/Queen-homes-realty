@@ -1386,9 +1386,13 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font); color: var(--dark); line-heig
 .properties-layout {
   display: grid;
   grid-template-columns: 1fr 340px;
+  grid-template-rows: auto 1fr;
   gap: 30px;
   align-items: start;
 }
+.properties-layout > .filter-aside     { grid-column: 2; grid-row: 1; }
+.properties-layout > .properties-main  { grid-column: 1; grid-row: 1 / span 2; }
+.properties-layout > .secondary-aside  { grid-column: 2; grid-row: 2; }
 
 .sidebar-widget {
   background: var(--white);
@@ -1626,7 +1630,13 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font); color: var(--dark); line-heig
   .about-row { flex-direction: column; }
   .about-text { padding: 20px 0 0 0; }
 
-  .properties-layout { grid-template-columns: 1fr; }
+  .properties-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  .properties-layout > .filter-aside    { grid-column: 1; grid-row: 1; }
+  .properties-layout > .properties-main { grid-column: 1; grid-row: 2; }
+  .properties-layout > .secondary-aside { grid-column: 1; grid-row: 3; }
 
   .section-header h2 { font-size: 26px; }
 
@@ -1708,6 +1718,12 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font); color: var(--dark); line-heig
 
   .whatsapp-btn span { display: none; }
   .whatsapp-btn { padding: 14px; border-radius: 50%; }
+
+  /* Tighter gaps on mobile */
+  .properties-layout { gap: 20px; }
+  .filter-bar { margin-bottom: 18px; }
+  .filter-bar-left span { font-size: 13px; }
+  .container { padding: 0 16px; }
 }
 
 @media (max-width: 480px) {
